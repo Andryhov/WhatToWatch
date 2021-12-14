@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Що подивитися</string>
+    <string name="poster">Головний постер</string>
+    <string name="popularity">Найпопулярніші</string>
+    <string name="rated">Найрейтинговіші</string>
+    <string name="name_label">Назва:</string>
+    <string name="original_title_label">Оригінальна назва:</string>
+    <string name="rate">Рейтинг:</string>
+    <string name="release_date">Дата релізу:</string>
+    <string name="description_label">Опис:</string>
+    <string name="icon_trailer">Іконка для трейлера</string>
+    <string name="trailers">Трейлери:</string>
+    <string name="reviews">Відгуки:</string>
+    <string name="main">Головна</string>
+    <string name="favorite">Вибране</string>
+    <string name="main_poster">Головний постер</string>
+    <string name="favourite_star">Лого обране</string>
+</resources>

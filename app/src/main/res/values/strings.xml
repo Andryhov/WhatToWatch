@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">To watch</string>
+    <string name="poster">main poster</string>
+    <string name="popularity">Most popular</string>
+    <string name="rated">Top rated</string>
+    <string name="name_label">Movie title:</string>
+    <string name="original_title_label">Original name:</string>
+    <string name="rate">Rating:</string>
+    <string name="release_date">Date of release:</string>
+    <string name="description_label">Description:</string>
+    <string name="icon_trailer">Icon for movie trailer</string>
+    <string name="trailers">Trailers:</string>
+    <string name="reviews">Reviews:</string>
+    <string name="main">Main</string>
+    <string name="favorite">Favorite</string>
+    <string name="main_poster">main poster</string>
+    <string name="favourite_star">favorite logo</string>
+</resources>

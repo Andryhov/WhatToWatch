@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Что - бы посмотреть</string>
+    <string name="popularity">Самые популярные</string>
+    <string name="rated">Самые рейтинговые</string>
+    <string name="name_label">Название:</string>
+    <string name="original_title_label">Оригинальное название:</string>
+    <string name="rate">Рейтинг:</string>
+    <string name="release_date">Дата релиза:</string>
+    <string name="description_label">Описание:</string>
+    <string name="trailers">Трейлеры:</string>
+    <string name="reviews">Отзывы:</string>
+    <string name="main">Главная</string>
+    <string name="favorite">Избранное</string>
+    <string name="main_poster">Главный постер</string>
+    <string name="favourite_star">Лого избранное</string>
+    <string name="poster">Главный постер</string>
+    <string name="icon_trailer">Иконка для трейлера</string>
+</resources>
