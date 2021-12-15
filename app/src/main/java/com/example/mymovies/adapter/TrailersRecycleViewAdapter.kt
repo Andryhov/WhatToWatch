@@ -26,7 +26,6 @@ class TrailersRecycleViewAdapter :
 
         init {
             textViewTrailer = itemView.findViewById(R.id.textViewTrailer)
-
             itemView.setOnClickListener {
                 trailerClickListener.onTrailerClickListener(adapterPosition)
             }

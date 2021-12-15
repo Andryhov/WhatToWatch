@@ -67,10 +67,10 @@ class JSONUtils {
 
         fun getListReviewsFromJson(jsonObject: JSONObject?): List<Review> {
             val listReviews = mutableListOf<Review>()
-            if(jsonObject == null) return listReviews
+            if (jsonObject == null) return listReviews
 
             val jsonArray = jsonObject.getJSONArray(KEY_RESULTS)
-            for(i in 0 until jsonArray.length()) {
+            for (i in 0 until jsonArray.length()) {
                 val reviewObject = jsonArray.getJSONObject(i)
                 val author = reviewObject.getString(KEY_AUTHOR)
                 val content = reviewObject.getString(KEY_CONTENT)
@@ -81,10 +81,10 @@ class JSONUtils {
 
         fun getListTrailersFromJson(jsonObject: JSONObject?): List<Trailer> {
             val listTrailers = mutableListOf<Trailer>()
-            if(jsonObject == null) return listTrailers
+            if (jsonObject == null) return listTrailers
 
             val jsonArray = jsonObject.getJSONArray(KEY_RESULTS)
-            for(i in 0 until jsonArray.length()) {
+            for (i in 0 until jsonArray.length()) {
                 val trailerObject = jsonArray.getJSONObject(i)
                 val name = trailerObject.getString(KEY_NAME)
                 val key = BASE_URL_YOUTUBE + trailerObject.getString(KEY_KEY)

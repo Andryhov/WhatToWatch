@@ -78,7 +78,6 @@ class DetailActivity : AppCompatActivity() {
         reviewRecyclerView.adapter = adapterReview
         reviewRecyclerView.layoutManager = LinearLayoutManager(this)
 
-
         val id = getParentIntent()
         checkMovieLoadFrom(id)
         gettingMoviesManagerViewModel.getListReviews(NetworkUtils.buildUrlReviews(id, lang))

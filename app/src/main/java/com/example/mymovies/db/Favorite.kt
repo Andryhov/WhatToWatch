@@ -18,8 +18,7 @@ class Favorite(
     override val backDropPath: String,
     override val voteAverage: Double,
     override val releaseDate: String
-)
-    : Movie(
+) : Movie(
     uniqueId,
     id,
     voteCount,
@@ -31,8 +30,7 @@ class Favorite(
     backDropPath,
     voteAverage,
     releaseDate
-)
-{
+) {
     @Ignore
     constructor(
         id: Int,
