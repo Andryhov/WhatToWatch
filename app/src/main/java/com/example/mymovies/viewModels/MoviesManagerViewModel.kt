@@ -1,9 +1,9 @@
 package com.example.mymovies.viewModels
 
 import androidx.lifecycle.*
-import com.example.mymovies.db.Movie
-import com.example.mymovies.db.Review
-import com.example.mymovies.db.Trailer
+import com.example.mymovies.data.Movie
+import com.example.mymovies.data.Review
+import com.example.mymovies.data.Trailer
 import com.example.mymovies.utils.JSONUtils
 import com.example.mymovies.utils.NetworkUtils
 import kotlinx.coroutines.launch

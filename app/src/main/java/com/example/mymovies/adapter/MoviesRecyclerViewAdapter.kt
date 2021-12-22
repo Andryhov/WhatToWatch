@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovies.R
 import com.example.mymovies.listener.PosterClickListener
-import com.example.mymovies.db.Movie
+import com.example.mymovies.data.Movie
 import com.example.mymovies.listener.OnReachEndListener
 import com.squareup.picasso.Picasso
 

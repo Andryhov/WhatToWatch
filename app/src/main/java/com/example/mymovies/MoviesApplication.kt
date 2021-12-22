@@ -1,7 +1,7 @@
 package com.example.mymovies
 
 import android.app.Application
-import com.example.mymovies.db.MovieDatabase
+import com.example.mymovies.data.MovieDatabase
 import com.example.mymovies.repository.MoviesRepository
 
 class MoviesApplication: Application() {

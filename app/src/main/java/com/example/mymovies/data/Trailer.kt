@@ -1,4 +1,4 @@
-package com.example.mymovies.db
+package com.example.mymovies.data
 
 data class Trailer(
     val name: String,

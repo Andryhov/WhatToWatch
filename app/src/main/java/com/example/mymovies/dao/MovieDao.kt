@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.mymovies.db.Favorite
-import com.example.mymovies.db.Movie
+import com.example.mymovies.data.Favorite
+import com.example.mymovies.data.Movie
 import kotlinx.coroutines.flow.Flow
 
 @Dao

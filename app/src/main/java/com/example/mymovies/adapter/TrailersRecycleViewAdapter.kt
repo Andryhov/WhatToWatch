@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovies.R
-import com.example.mymovies.db.Trailer
+import com.example.mymovies.data.Trailer
 import com.example.mymovies.listener.TrailerClickListener
 
 class TrailersRecycleViewAdapter :

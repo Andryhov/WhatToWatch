@@ -2,8 +2,8 @@ package com.example.mymovies.repository
 
 import androidx.annotation.WorkerThread
 import com.example.mymovies.dao.MovieDao
-import com.example.mymovies.db.Favorite
-import com.example.mymovies.db.Movie
+import com.example.mymovies.data.Favorite
+import com.example.mymovies.data.Movie
 import kotlinx.coroutines.flow.Flow
 
 class MoviesRepository(private val movieDao: MovieDao) {

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_favorite"
-        android:name="com.example.mymovies.ui.gallery.FavoriteFragment"
+        android:name="com.example.mymovies.ui.favorite.FavoriteFragment"
         android:label="@string/favorite"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/nav_topRated"
-        android:name="com.example.mymovies.ui.slideshow.TopRatedFragment"
+        android:name="com.example.mymovies.ui.rated.TopRatedFragment"
         android:label="@string/rated"
         tools:layout="@layout/fragment_toprated" />
 
     <fragment
         android:id="@+id/nav_popularity"
-        android:name="com.example.mymovies.ui.home.PopularityFragment"
+        android:name="com.example.mymovies.ui.popularity.PopularityFragment"
         android:label="@string/popularity"
         tools:layout="@layout/fragment_popularity" />
 

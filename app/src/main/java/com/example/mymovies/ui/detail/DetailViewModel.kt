@@ -1,8 +1,8 @@
 package com.example.mymovies.ui.detail
 
 import androidx.lifecycle.*
-import com.example.mymovies.db.Favorite
-import com.example.mymovies.db.Movie
+import com.example.mymovies.data.Favorite
+import com.example.mymovies.data.Movie
 import com.example.mymovies.repository.MoviesRepository
 import kotlinx.coroutines.launch
 

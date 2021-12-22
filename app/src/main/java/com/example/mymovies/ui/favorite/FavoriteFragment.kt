@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.gallery
+package com.example.mymovies.ui.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.example.mymovies.MoviesApplication
 import com.example.mymovies.R
 import com.example.mymovies.adapter.MoviesRecyclerViewAdapter
 import com.example.mymovies.databinding.FragmentFavoriteBinding
-import com.example.mymovies.db.Movie
+import com.example.mymovies.data.Movie
 import com.example.mymovies.listener.PosterClickListener
 
 class FavoriteFragment : Fragment() {

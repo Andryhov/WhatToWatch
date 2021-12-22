@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.gallery
+package com.example.mymovies.ui.favorite
 
 import androidx.lifecycle.*
 import com.example.mymovies.repository.MoviesRepository

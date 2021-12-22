@@ -1,8 +1,8 @@
 package com.example.mymovies.utils
 
-import com.example.mymovies.db.Movie
-import com.example.mymovies.db.Review
-import com.example.mymovies.db.Trailer
+import com.example.mymovies.data.Movie
+import com.example.mymovies.data.Review
+import com.example.mymovies.data.Trailer
 import org.json.JSONObject
 
 class JSONUtils {

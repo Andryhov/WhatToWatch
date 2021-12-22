@@ -15,10 +15,10 @@ import com.example.mymovies.R
 import com.example.mymovies.adapter.ReviewsRecyclerViewAdapter
 import com.example.mymovies.adapter.TrailersRecycleViewAdapter
 import com.example.mymovies.databinding.DetailFragmentBinding
-import com.example.mymovies.db.Favorite
-import com.example.mymovies.db.Movie
-import com.example.mymovies.db.Review
-import com.example.mymovies.db.Trailer
+import com.example.mymovies.data.Favorite
+import com.example.mymovies.data.Movie
+import com.example.mymovies.data.Review
+import com.example.mymovies.data.Trailer
 import com.example.mymovies.listener.TrailerClickListener
 import com.example.mymovies.utils.NetworkUtils
 import com.example.mymovies.viewModels.MoviesManagerViewModel

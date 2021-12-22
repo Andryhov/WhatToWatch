@@ -1,7 +1,7 @@
-package com.example.mymovies.ui.slideshow
+package com.example.mymovies.ui.rated
 
 import androidx.lifecycle.*
-import com.example.mymovies.db.Movie
+import com.example.mymovies.data.Movie
 import com.example.mymovies.repository.MoviesRepository
 import kotlinx.coroutines.launch
 

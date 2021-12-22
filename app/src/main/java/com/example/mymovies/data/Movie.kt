@@ -1,4 +1,4 @@
-package com.example.mymovies.db
+package com.example.mymovies.data
 
 import androidx.room.Entity
 import androidx.room.Ignore

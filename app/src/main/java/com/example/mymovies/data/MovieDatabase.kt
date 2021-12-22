@@ -1,4 +1,4 @@
-package com.example.mymovies.db
+package com.example.mymovies.data
 
 import android.content.Context
 import androidx.room.Database

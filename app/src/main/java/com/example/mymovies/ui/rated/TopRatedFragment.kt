@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.home
+package com.example.mymovies.ui.rated
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mymovies.MoviesApplication
 import com.example.mymovies.R
 import com.example.mymovies.adapter.MoviesRecyclerViewAdapter
-import com.example.mymovies.databinding.FragmentPopularityBinding
-import com.example.mymovies.db.Movie
+import com.example.mymovies.databinding.FragmentTopratedBinding
+import com.example.mymovies.data.Movie
 import com.example.mymovies.listener.OnReachEndListener
 import com.example.mymovies.listener.OnStartLoadingListener
 import com.example.mymovies.listener.PosterClickListener
@@ -25,11 +25,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-class PopularityFragment : Fragment() {
+class TopRatedFragment : Fragment() {
 
-    private var moviesViewModel: PopularityViewModel? = null
+    private lateinit var ratedViewModel: RatedViewModel
     private lateinit var networkViewModel: MoviesManagerViewModel
-    private var _binding: FragmentPopularityBinding? = null
+    private var _binding: FragmentTopratedBinding? = null
     private var adapter = MoviesRecyclerViewAdapter()
 
     private var page = 1
@@ -51,26 +51,26 @@ class PopularityFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPopularityBinding.inflate(inflater, container, false)
+        _binding = FragmentTopratedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("page", page)
-        moviesViewModel?.cacheListMovie?.addAll(adapter.listMovies)
+        ratedViewModel.cacheListMovie.addAll(adapter.listMovies)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        moviesViewModel =
+        ratedViewModel =
             ViewModelProvider(
                 this,
-                PopularityViewModel.PopularityViewModelFactory(
+                RatedViewModel.RatedViewModelFactory(
                     (requireNotNull(this.activity).application as MoviesApplication)
                         .moviesRepository
                 )
-            )[PopularityViewModel::class.java]
+            )[RatedViewModel::class.java]
 
         networkViewModel =
             ViewModelProvider(this, NetworkViewModelFactory())[MoviesManagerViewModel::class.java]
@@ -80,15 +80,16 @@ class PopularityFragment : Fragment() {
         val recyclerView = binding.recyclerViewPosters
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(this.context, getColumnCount())
+
         observeNetworkView()
-        reachEndListener()
         loadDataFromNetwork(page)
+        reachEndListener()
         clickOnPoster()
 
         if (savedInstanceState != null) {
             page = savedInstanceState.getInt("page")
-            adapter.listMovies.addAll(moviesViewModel?.cacheListMovie ?: listOf())
-            moviesViewModel?.cacheListMovie?.clear()
+            adapter.listMovies.addAll(ratedViewModel.cacheListMovie)
+            ratedViewModel.cacheListMovie.clear()
         }
     }
 
@@ -106,7 +107,7 @@ class PopularityFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         isLoading = false
-        moviesViewModel?.cacheListMovie?.clear()
+        ratedViewModel.cacheListMovie.clear()
     }
 
     private fun getColumnCount(): Int {
@@ -116,7 +117,7 @@ class PopularityFragment : Fragment() {
     }
 
     private fun observeMovies() {
-        moviesViewModel?.allMovies?.observe(viewLifecycleOwner, {
+        ratedViewModel.allMovies.observe(viewLifecycleOwner, {
             if (page == 1) {
                 this.adapter.listMovies = it as MutableList<Movie>
             }
@@ -134,8 +135,10 @@ class PopularityFragment : Fragment() {
     }
 
     private fun loadDataFromNetwork(page: Int) {
-        if (moviesViewModel?.cacheListMovie?.size == 0) {
-            networkViewModel.loadMoviesList(NetworkUtils.buildURL(page, false, lang))
+        if (ratedViewModel.cacheListMovie.size == 0) {
+            networkViewModel.loadMoviesList(
+                NetworkUtils.buildURL(page, true, lang)
+            )
         }
         NetworkUtils.onStartLoadingListener = object : OnStartLoadingListener {
             override fun onStartLoading() {
@@ -148,9 +151,9 @@ class PopularityFragment : Fragment() {
     private fun observeNetworkView() {
         networkViewModel.listMovies.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
-                if (moviesViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
-                    removeMoviesFromAll()
-                    it.forEach { movie -> moviesViewModel?.addMovie(movie) }
+                if (ratedViewModel.cacheListMovie.size == 0 && !adapter.listMovies.containsAll(it)) {
+                    clearMoviesFromAll()
+                    it.forEach { movie -> ratedViewModel.addMovie(movie) }
                     adapter.listMovies = it as MutableList<Movie>
                     page++
                 }
@@ -169,10 +172,10 @@ class PopularityFragment : Fragment() {
         })
     }
 
-    private fun removeMoviesFromAll() {
+    private fun clearMoviesFromAll() {
         if (page == 1) {
             adapter.clear()
-            moviesViewModel?.removeAllMovies()
+            ratedViewModel.removeAllMovies()
         }
     }
 
