@@ -40,6 +40,6 @@
         android:shadowRadius="4"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="@id/imageViewSmallPoster"
-        app:layout_constraintEnd_toEndOf="@id/imageViewSmallPoster" />
+        app:layout_constraintEnd_toEndOf="@id/imageViewSmallPoster"
+        app:layout_constraintTop_toTopOf="@id/imageViewSmallPoster" />
 </androidx.constraintlayout.widget.ConstraintLayout>

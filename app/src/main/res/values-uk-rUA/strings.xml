@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Що подивитися</string>
+    <string name="app_name">Що подивитися?</string>
     <string name="poster">Головний постер</string>
     <string name="popularity">Найпопулярніші</string>
     <string name="rated">Найрейтинговіші</string>
@@ -16,4 +16,5 @@
     <string name="favorite">Вибране</string>
     <string name="main_poster">Головний постер</string>
     <string name="favourite_star">Лого обране</string>
+    <string name="detail_info">Детальна інформація</string>
 </resources>
