@@ -158,7 +158,7 @@ class PopularityFragment : Fragment() {
                 observeMovies()
                 Toast.makeText(
                     this.context,
-                    "No internet connection, please try again later ...",
+                    getString(R.string.no_internet_connection),
                     Toast.LENGTH_SHORT
                 ).show()
             }

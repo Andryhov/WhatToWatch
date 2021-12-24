@@ -18,4 +18,6 @@
     <string name="favourite_star">Лого обране</string>
     <string name="detail_info">Детальна інформація</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="remove_from_favorite">Видалено з обраного</string>
+    <string name="add_to_favorite">Додано до вибраного</string>
 </resources>

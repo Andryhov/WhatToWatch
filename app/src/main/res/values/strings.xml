@@ -19,4 +19,6 @@
 
     <string name="detail_info">Detail info</string>
     <string name="no_internet_connection" translatable="false">No internet connection, please try again later …</string>
+    <string name="add_to_favorite">Added to favorites</string>
+    <string name="remove_from_favorite">Removed from favorites</string>
 </resources>
