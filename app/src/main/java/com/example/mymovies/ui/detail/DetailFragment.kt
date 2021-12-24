@@ -121,7 +121,11 @@ class DetailFragment : Fragment() {
             if (favouriteMovie == null) {
                 viewModel.addFavouriteMovie(Favorite(movie))
                 binding.imageViewFavoriteStar.setImageResource(R.drawable.favourite_remove)
-                Toast.makeText(this.context, getString(R.string.add_to_favorite), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this.context,
+                    getString(R.string.add_to_favorite),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 viewModel.removeFavouriteMovie(favouriteMovie as Favorite)
                 Toast.makeText(
