@@ -17,4 +17,5 @@
     <string name="main_poster">Головний постер</string>
     <string name="favourite_star">Лого обране</string>
     <string name="detail_info">Детальна інформація</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>
