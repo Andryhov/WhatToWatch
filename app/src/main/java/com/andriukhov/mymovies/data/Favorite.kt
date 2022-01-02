@@ -14,7 +14,6 @@ class Favorite(
     override val originalTitle: String,
     override val overview: String,
     override val posterPath: String,
-    override val bigPosterPath: String,
     override val backDropPath: String,
     override val voteAverage: Double,
     override val releaseDate: String
@@ -26,7 +25,6 @@ class Favorite(
     originalTitle,
     overview,
     posterPath,
-    bigPosterPath,
     backDropPath,
     voteAverage,
     releaseDate
@@ -39,7 +37,6 @@ class Favorite(
         originalTitle: String,
         overview: String,
         posterPath: String,
-        bigPosterPath: String,
         backDropPath: String,
         voteAverage: Double,
         releaseDate: String
@@ -51,7 +48,6 @@ class Favorite(
         originalTitle,
         overview,
         posterPath,
-        bigPosterPath,
         backDropPath,
         voteAverage,
         releaseDate
@@ -66,7 +62,6 @@ class Favorite(
         movie.originalTitle,
         movie.overview,
         movie.posterPath,
-        movie.bigPosterPath,
         movie.backDropPath,
         movie.voteAverage,
         movie.releaseDate

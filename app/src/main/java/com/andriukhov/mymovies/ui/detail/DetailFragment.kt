@@ -14,15 +14,16 @@ import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.ReviewsRecyclerViewAdapter
 import com.andriukhov.mymovies.adapter.TrailersRecycleViewAdapter
+import com.andriukhov.mymovies.api.ApiFactory
+import com.andriukhov.mymovies.api.ApiHelper
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.data.Favorite
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.data.Review
 import com.andriukhov.mymovies.data.Trailer
 import com.andriukhov.mymovies.listener.TrailerClickListener
-import com.andriukhov.mymovies.utils.NetworkUtils
-import com.andriukhov.mymovies.viewModels.MoviesManagerViewModel
-import com.andriukhov.mymovies.viewModels.NetworkViewModelFactory
+import com.andriukhov.mymovies.viewModels.RetrofitViewModel
+import com.andriukhov.mymovies.viewModels.RetrofitViewModelFactory
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -30,14 +31,17 @@ class DetailFragment : Fragment() {
 
     private lateinit var binding: DetailFragmentBinding
     private lateinit var viewModel: DetailViewModel
-    private lateinit var networkViewModel: MoviesManagerViewModel
+    private lateinit var networkViewModel: RetrofitViewModel
     private var favouriteMovie: Favorite? = null
     private lateinit var movie: Movie
     private var from = ""
 
     companion object {
-        fun newInstance() = DetailFragment()
+//        fun newInstance() = DetailFragment()
         private lateinit var lang: String
+        private const val BASE_URL_IMG = "https://image.tmdb.org/t/p"
+        private const val BASE_URL_YOUTUBE = "https://www.youtube.com/watch?v="
+        private const val BIG_POSTER_SIZE = "/w780"
     }
 
     override fun onCreateView(
@@ -50,13 +54,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(
-            this,
-            DetailViewModel.DetailViewModelFactory((requireNotNull(this.activity).application as MoviesApplication).moviesRepository)
-        )[DetailViewModel::class.java]
-
-        networkViewModel =
-            ViewModelProvider(this, NetworkViewModelFactory())[MoviesManagerViewModel::class.java]
+        initViewModel()
 
         lang = Locale.getDefault().language
 
@@ -64,8 +62,6 @@ class DetailFragment : Fragment() {
         val adapterTrailer = TrailersRecycleViewAdapter()
         trailerRecycleView.adapter = adapterTrailer
         trailerRecycleView.layoutManager = LinearLayoutManager(this.context)
-
-        clickOnTrailer(adapterTrailer)
 
         val reviewRecyclerView = binding.movieInfo.recyclerViewReviews
         val adapterReview = ReviewsRecyclerViewAdapter()
@@ -75,12 +71,25 @@ class DetailFragment : Fragment() {
         val id = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
 
+
         checkMovieLoadFrom(id)
-        networkViewModel.getListReviews(NetworkUtils.buildUrlReviews(id, lang))
-        networkViewModel.getTrailers(NetworkUtils.buildUrlTrailer(id, lang))
-        loadTrailers(adapterTrailer)
-        loadReviewsForMovie(adapterReview)
+        getTrailers(id, adapterTrailer)
+        getReviews(id, adapterReview)
         clickFavoriteStar()
+        clickOnTrailer(adapterTrailer)
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            DetailViewModel.DetailViewModelFactory((requireNotNull(this.activity).application as MoviesApplication).moviesRepository)
+        )[DetailViewModel::class.java]
+
+        networkViewModel =
+            ViewModelProvider(
+                this,
+                RetrofitViewModelFactory(ApiHelper(ApiFactory.getInstance()!!.getApiService()))
+            )[RetrofitViewModel::class.java]
     }
 
     private fun clickOnTrailer(adapterTrailer: TrailersRecycleViewAdapter) {
@@ -88,14 +97,14 @@ class DetailFragment : Fragment() {
             override fun onTrailerClickListener(position: Int) {
                 val trailer = adapterTrailer.trailersList[position]
 
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.key))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL_YOUTUBE + trailer.key))
                 startActivity(intent)
             }
         }
     }
 
-    private fun loadTrailers(adapter: TrailersRecycleViewAdapter) {
-        networkViewModel.listTrailers.observe(viewLifecycleOwner, {
+    private fun getTrailers(id:Int, adapter: TrailersRecycleViewAdapter) {
+        networkViewModel.getTrailers(id, lang).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleTrailer.visibility = View.VISIBLE
                 adapter.trailersList = it as MutableList<Trailer>
@@ -105,8 +114,8 @@ class DetailFragment : Fragment() {
         })
     }
 
-    private fun loadReviewsForMovie(adapter: ReviewsRecyclerViewAdapter) {
-        networkViewModel.listReviews.observe(viewLifecycleOwner, {
+    private fun getReviews(id: Int, adapter: ReviewsRecyclerViewAdapter) {
+        networkViewModel.getReviews(id, lang).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleReviews.visibility = View.VISIBLE
                 adapter.reviewsList = it as MutableList<Review>
@@ -162,7 +171,8 @@ class DetailFragment : Fragment() {
     private fun setMovieData(it: Movie?, id: Int) {
         if (it != null) {
             this.movie = it
-            Picasso.get().load(it.bigPosterPath).placeholder(R.drawable.placeholder)
+            Picasso.get().load(BASE_URL_IMG + BIG_POSTER_SIZE + it.posterPath)
+                .placeholder(R.drawable.placeholder)
                 .into(binding.imageViewBigPoster)
             with(it) {
                 binding.movieInfo.textViewNameText.text = title

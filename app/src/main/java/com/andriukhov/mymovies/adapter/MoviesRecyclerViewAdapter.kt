@@ -14,9 +14,13 @@ import com.squareup.picasso.Picasso
 
 class MoviesRecyclerViewAdapter :
     RecyclerView.Adapter<MoviesRecyclerViewAdapter.MoviesViewHolder>() {
-
     lateinit var posterClickListener: PosterClickListener
     lateinit var onReachEndListener: OnReachEndListener
+
+    companion object {
+        private const val BASE_IMG_URL = "https://image.tmdb.org/t/p"
+        private const val SMALL_POSTER_SIZE = "/w185"
+    }
 
     var listMovies = mutableListOf<Movie>()
         set(value) {
@@ -33,7 +37,7 @@ class MoviesRecyclerViewAdapter :
             imageViewPoster = itemView.findViewById(R.id.imageViewSmallPoster)
             textViewRaiting = itemView.findViewById(R.id.textViewRaiting)
             textViewYear = itemView.findViewById(R.id.texViewYear)
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 posterClickListener.onPosterClickListener(adapterPosition)
             }
         }
@@ -43,20 +47,27 @@ class MoviesRecyclerViewAdapter :
         listMovies.clear()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesRecyclerViewAdapter.MoviesViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MoviesRecyclerViewAdapter.MoviesViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.movie_item, parent, false)
         return MoviesViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: MoviesRecyclerViewAdapter.MoviesViewHolder, position: Int) {
-        if(listMovies.size >= 20 && position >= listMovies.size - 1) {
+    override fun onBindViewHolder(
+        holder: MoviesRecyclerViewAdapter.MoviesViewHolder,
+        position: Int
+    ) {
+        if (listMovies.size >= 20 && position >= listMovies.size - 1) {
             onReachEndListener.onReachEnd()
         }
         val movie = listMovies[position]
-        Picasso.get().load(movie.posterPath).placeholder(R.drawable.placeholder).into(holder.imageViewPoster)
+        Picasso.get().load(BASE_IMG_URL + SMALL_POSTER_SIZE + movie.posterPath)
+            .placeholder(R.drawable.placeholder).into(holder.imageViewPoster)
         holder.textViewRaiting?.text = movie.voteAverage.toString()
-        holder.textViewYear?.text = movie.releaseDate.substring(0,4)
+        holder.textViewYear?.text = movie.releaseDate.substring(0, 4)
     }
 
     override fun getItemCount(): Int = listMovies.size

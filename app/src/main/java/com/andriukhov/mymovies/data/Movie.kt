@@ -3,20 +3,39 @@ package com.andriukhov.mymovies.data
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movies")
 open class Movie(
     @PrimaryKey(autoGenerate = true)
     open val uniqueId: Int,
+    @SerializedName("id")
+    @Expose
     open val id: Int,
+    @SerializedName("vote_count")
+    @Expose
     open val voteCount: Int,
+    @SerializedName("title")
+    @Expose
     open val title: String,
+    @SerializedName("original_title")
+    @Expose
     open val originalTitle: String,
+    @SerializedName("overview")
+    @Expose
     open val overview: String,
+    @SerializedName("poster_path")
+    @Expose
     open val posterPath: String,
-    open val bigPosterPath: String,
+    @SerializedName("backdrop_path")
+    @Expose
     open val backDropPath: String,
+    @SerializedName("vote_average")
+    @Expose
     open val voteAverage: Double,
+    @SerializedName("release_date")
+    @Expose
     open val releaseDate: String
 ) {
     @Ignore
@@ -27,7 +46,6 @@ open class Movie(
         originalTitle: String,
         overview: String,
         posterPath: String,
-        bigPosterPath: String,
         backDropPath: String,
         voteAverage: Double,
         releaseDate: String
@@ -39,7 +57,6 @@ open class Movie(
         originalTitle,
         overview,
         posterPath,
-        bigPosterPath,
         backDropPath,
         voteAverage,
         releaseDate
@@ -54,7 +71,6 @@ open class Movie(
         favorite.originalTitle,
         favorite.overview,
         favorite.posterPath,
-        favorite.bigPosterPath,
         favorite.backDropPath,
         favorite.voteAverage,
         favorite.releaseDate

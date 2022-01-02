@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
+import com.andriukhov.mymovies.api.ApiFactory
+import com.andriukhov.mymovies.api.ApiHelper
 import com.andriukhov.mymovies.databinding.FragmentTopratedBinding
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.listener.OnReachEndListener
-import com.andriukhov.mymovies.listener.OnStartLoadingListener
 import com.andriukhov.mymovies.listener.PosterClickListener
-import com.andriukhov.mymovies.utils.NetworkUtils
-import com.andriukhov.mymovies.viewModels.MoviesManagerViewModel
-import com.andriukhov.mymovies.viewModels.NetworkViewModelFactory
+import com.andriukhov.mymovies.viewModels.RetrofitViewModel
+import com.andriukhov.mymovies.viewModels.RetrofitViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -28,7 +28,7 @@ import java.util.*
 class TopRatedFragment : Fragment() {
 
     private lateinit var ratedViewModel: RatedViewModel
-    private lateinit var networkViewModel: MoviesManagerViewModel
+    private lateinit var networkViewModel: RetrofitViewModel
     private var _binding: FragmentTopratedBinding? = null
     private var adapter = MoviesRecyclerViewAdapter()
 
@@ -63,6 +63,23 @@ class TopRatedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        lang = Locale.getDefault().language
+        val recyclerView = binding.recyclerViewPosters
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(this.context, getColumnCount())
+        getMovies()
+        reachEndListener()
+        clickOnPoster()
+
+        if (savedInstanceState != null) {
+            page = savedInstanceState.getInt("page")
+            adapter.listMovies.addAll(ratedViewModel.cacheListMovie)
+            ratedViewModel.cacheListMovie.clear()
+        }
+    }
+
+    private fun initViewModel() {
         ratedViewModel =
             ViewModelProvider(
                 this,
@@ -73,24 +90,10 @@ class TopRatedFragment : Fragment() {
             )[RatedViewModel::class.java]
 
         networkViewModel =
-            ViewModelProvider(this, NetworkViewModelFactory())[MoviesManagerViewModel::class.java]
-
-        lang = Locale.getDefault().language
-
-        val recyclerView = binding.recyclerViewPosters
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(this.context, getColumnCount())
-
-        observeNetworkView()
-        loadDataFromNetwork(page)
-        reachEndListener()
-        clickOnPoster()
-
-        if (savedInstanceState != null) {
-            page = savedInstanceState.getInt("page")
-            adapter.listMovies.addAll(ratedViewModel.cacheListMovie)
-            ratedViewModel.cacheListMovie.clear()
-        }
+            ViewModelProvider(
+                this,
+                RetrofitViewModelFactory(ApiHelper(ApiFactory.getInstance()!!.getApiService()))
+            )[RetrofitViewModel::class.java]
     }
 
     private fun clickOnPoster() {
@@ -116,7 +119,7 @@ class TopRatedFragment : Fragment() {
         return if (fl / 185 > 2) fl / 185 else 2
     }
 
-    private fun observeMovies() {
+    private fun loadMoviesFromDb() {
         ratedViewModel.allMovies.observe(viewLifecycleOwner, {
             if (page == 1) {
                 this.adapter.listMovies = it as MutableList<Movie>
@@ -128,28 +131,16 @@ class TopRatedFragment : Fragment() {
         adapter.onReachEndListener = object : OnReachEndListener {
             override fun onReachEnd() {
                 if (!isLoading) {
-                    loadDataFromNetwork(page)
+                    isLoading = true
+                    getMovies()
+                    binding.progressBarLoading.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun loadDataFromNetwork(page: Int) {
-        if (ratedViewModel.cacheListMovie.size == 0) {
-            networkViewModel.loadMoviesList(
-                NetworkUtils.buildURL(page, true, lang)
-            )
-        }
-        NetworkUtils.onStartLoadingListener = object : OnStartLoadingListener {
-            override fun onStartLoading() {
-                isLoading = true
-            }
-        }
-        binding.progressBarLoading.visibility = View.VISIBLE
-    }
-
-    private fun observeNetworkView() {
-        networkViewModel.listMovies.observe(viewLifecycleOwner, {
+    private fun getMovies() {
+        networkViewModel.getTopRatedMovies(lang, page).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 if (ratedViewModel.cacheListMovie.size == 0 && !adapter.listMovies.containsAll(it)) {
                     clearMoviesFromAll()
@@ -158,7 +149,7 @@ class TopRatedFragment : Fragment() {
                     page++
                 }
             } else {
-                observeMovies()
+                loadMoviesFromDb()
                 Toast.makeText(
                     this.context,
                     getString(R.string.no_internet_connection),
