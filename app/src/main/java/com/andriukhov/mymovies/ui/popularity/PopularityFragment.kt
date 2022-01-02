@@ -27,8 +27,8 @@ import java.util.*
 
 class PopularityFragment : Fragment() {
 
-    private var moviesViewModel: PopularityViewModel? = null
-    private lateinit var networkViewModel: RetrofitViewModel
+    private var popularityViewModel: PopularityViewModel? = null
+    private lateinit var retrofitViewModel: RetrofitViewModel
     private var _binding: FragmentPopularityBinding? = null
     private var adapter = MoviesRecyclerViewAdapter()
 
@@ -58,7 +58,7 @@ class PopularityFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("page", page)
-        moviesViewModel?.cacheListMovie?.addAll(adapter.listMovies)
+        popularityViewModel?.cacheListMovie?.addAll(adapter.listMovies)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,19 +68,22 @@ class PopularityFragment : Fragment() {
         val recyclerView = binding.recyclerViewPosters
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(this.context, getColumnCount())
+        loadInstanceState(savedInstanceState)
         getMovies()
         reachEndListener()
         clickOnPoster()
+    }
 
+    private fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             page = savedInstanceState.getInt("page")
-            adapter.listMovies.addAll(moviesViewModel?.cacheListMovie ?: listOf())
-            moviesViewModel?.cacheListMovie?.clear()
+            adapter.listMovies.addAll(popularityViewModel?.cacheListMovie ?: listOf())
+            popularityViewModel?.cacheListMovie?.clear()
         }
     }
 
     private fun initViewModel() {
-        moviesViewModel =
+        popularityViewModel =
             ViewModelProvider(
                 this,
                 PopularityViewModel.PopularityViewModelFactory(
@@ -89,7 +92,7 @@ class PopularityFragment : Fragment() {
                 )
             )[PopularityViewModel::class.java]
 
-        networkViewModel =
+        retrofitViewModel =
             ViewModelProvider(
                 this,
                 RetrofitViewModelFactory(ApiHelper(ApiFactory.getInstance()!!.getApiService()))
@@ -110,7 +113,7 @@ class PopularityFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         isLoading = false
-        moviesViewModel?.cacheListMovie?.clear()
+        popularityViewModel?.cacheListMovie?.clear()
     }
 
     private fun getColumnCount(): Int {
@@ -120,7 +123,7 @@ class PopularityFragment : Fragment() {
     }
 
     private fun loadMoviesFromDb() {
-        moviesViewModel?.allMovies?.observe(viewLifecycleOwner, {
+        popularityViewModel?.allMovies?.observe(viewLifecycleOwner, {
             if (page == 1) {
                 this.adapter.listMovies = it as MutableList<Movie>
             }
@@ -140,11 +143,11 @@ class PopularityFragment : Fragment() {
     }
 
     private fun getMovies() {
-        networkViewModel.getPopularityMovies(lang, page).observe(viewLifecycleOwner, {
+        retrofitViewModel.getPopularityMovies(lang, page).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
-                if (moviesViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
+                if (popularityViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
                     removeMoviesFromAll()
-                    it.forEach { movie -> moviesViewModel?.addMovie(movie) }
+                    it.forEach { movie -> popularityViewModel?.addMovie(movie) }
                     adapter.listMovies = it as MutableList<Movie>
                     page++
                 }
@@ -166,7 +169,7 @@ class PopularityFragment : Fragment() {
     private fun removeMoviesFromAll() {
         if (page == 1) {
             adapter.clear()
-            moviesViewModel?.removeAllMovies()
+            popularityViewModel?.removeAllMovies()
         }
     }
 

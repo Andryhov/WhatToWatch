@@ -68,10 +68,13 @@ class TopRatedFragment : Fragment() {
         val recyclerView = binding.recyclerViewPosters
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(this.context, getColumnCount())
+        loadInstanceState(savedInstanceState)
         getMovies()
         reachEndListener()
         clickOnPoster()
+    }
 
+    private fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             page = savedInstanceState.getInt("page")
             adapter.listMovies.addAll(ratedViewModel.cacheListMovie)
