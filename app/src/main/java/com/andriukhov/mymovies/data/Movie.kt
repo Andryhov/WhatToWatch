@@ -1,12 +1,12 @@
 package com.andriukhov.mymovies.data
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.andriukhov.mymovies.converters.Converter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movies")
+@TypeConverters(value = [Converter::class])
 open class Movie(
     @PrimaryKey(autoGenerate = true)
     open val uniqueId: Int,
@@ -36,7 +36,10 @@ open class Movie(
     open val voteAverage: Double,
     @SerializedName("release_date")
     @Expose
-    open val releaseDate: String
+    open val releaseDate: String,
+    @SerializedName("genre_ids")
+    @Expose
+    open val genreIds: List<Int>
 ) {
     @Ignore
     constructor(
@@ -48,7 +51,8 @@ open class Movie(
         posterPath: String,
         backDropPath: String,
         voteAverage: Double,
-        releaseDate: String
+        releaseDate: String,
+        genreIds: List<Int>
     ) : this(
         uniqueId = 0,
         id,
@@ -59,7 +63,8 @@ open class Movie(
         posterPath,
         backDropPath,
         voteAverage,
-        releaseDate
+        releaseDate,
+        genreIds
     )
 
     @Ignore
@@ -73,6 +78,7 @@ open class Movie(
         favorite.posterPath,
         favorite.backDropPath,
         favorite.voteAverage,
-        favorite.releaseDate
+        favorite.releaseDate,
+        favorite.genreIds
     )
 }

@@ -16,7 +16,8 @@ class Favorite(
     override val posterPath: String,
     override val backDropPath: String,
     override val voteAverage: Double,
-    override val releaseDate: String
+    override val releaseDate: String,
+    override val genreIds: List<Int>
 ) : Movie(
     uniqueId,
     id,
@@ -27,7 +28,8 @@ class Favorite(
     posterPath,
     backDropPath,
     voteAverage,
-    releaseDate
+    releaseDate,
+    genreIds
 ) {
     @Ignore
     constructor(
@@ -39,7 +41,8 @@ class Favorite(
         posterPath: String,
         backDropPath: String,
         voteAverage: Double,
-        releaseDate: String
+        releaseDate: String,
+        genreIds: List<Int>
     ) : this(
         uniqueId = 0,
         id,
@@ -50,7 +53,8 @@ class Favorite(
         posterPath,
         backDropPath,
         voteAverage,
-        releaseDate
+        releaseDate,
+        genreIds
     )
 
     @Ignore
@@ -64,6 +68,7 @@ class Favorite(
         movie.posterPath,
         movie.backDropPath,
         movie.voteAverage,
-        movie.releaseDate
+        movie.releaseDate,
+        movie.genreIds
     )
 }
