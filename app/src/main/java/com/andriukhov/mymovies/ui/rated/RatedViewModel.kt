@@ -9,6 +9,8 @@ class RatedViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     var cacheListMovie = mutableListOf<Movie>()
 
+    private val dataMovies = MutableLiveData<List<Movie>>()
+
     val allMovies = repository.getAllMovies.asLiveData()
 
     fun getMovieById(id: Int): LiveData<Movie> = repository.getMovieById(id).asLiveData()
@@ -19,6 +21,17 @@ class RatedViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     fun removeAllMovies() = viewModelScope.launch {
         repository.deleteAllMovies()
+    }
+
+    fun getTopRatedMovies(language: String, page: Int): LiveData<List<Movie>> {
+        loadTopRatedMovies(language, page)
+        return dataMovies
+    }
+
+    private fun loadTopRatedMovies(language: String, page: Int) {
+        viewModelScope.launch {
+            dataMovies.value = repository.getTopRatedMovies(language, page).results
+        }
     }
 
     class RatedViewModelFactory(private val repository: MoviesRepository) : ViewModelProvider.Factory {

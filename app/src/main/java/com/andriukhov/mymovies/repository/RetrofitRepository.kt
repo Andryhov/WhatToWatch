@@ -3,8 +3,6 @@ package com.andriukhov.mymovies.repository
 import com.andriukhov.mymovies.api.ApiHelper
 
 class RetrofitRepository(private val apiHelper: ApiHelper) {
-    suspend fun getPopularityMovies(language: String, page: Int) =
-        apiHelper.getPopularityMovies(language, page)
 
     suspend fun getTopRatedMovies(language: String, page: Int) =
         apiHelper.getTopRatedMovies(language, page)

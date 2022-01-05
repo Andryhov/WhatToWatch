@@ -14,16 +14,12 @@ import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.ReviewsRecyclerViewAdapter
 import com.andriukhov.mymovies.adapter.TrailersRecycleViewAdapter
-import com.andriukhov.mymovies.api.ApiFactory
-import com.andriukhov.mymovies.api.ApiHelper
-import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.data.Favorite
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.data.Review
 import com.andriukhov.mymovies.data.Trailer
+import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.listener.TrailerClickListener
-import com.andriukhov.mymovies.viewModels.RetrofitViewModel
-import com.andriukhov.mymovies.viewModels.RetrofitViewModelFactory
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -31,7 +27,6 @@ class DetailFragment : Fragment() {
 
     private lateinit var binding: DetailFragmentBinding
     private lateinit var viewModel: DetailViewModel
-    private lateinit var networkViewModel: RetrofitViewModel
     private var favouriteMovie: Favorite? = null
     private lateinit var movie: Movie
     private var from = ""
@@ -84,12 +79,6 @@ class DetailFragment : Fragment() {
             this,
             DetailViewModel.DetailViewModelFactory((requireNotNull(this.activity).application as MoviesApplication).moviesRepository)
         )[DetailViewModel::class.java]
-
-        networkViewModel =
-            ViewModelProvider(
-                this,
-                RetrofitViewModelFactory(ApiHelper(ApiFactory.getInstance()!!.getApiService()))
-            )[RetrofitViewModel::class.java]
     }
 
     private fun clickOnTrailer(adapterTrailer: TrailersRecycleViewAdapter) {
@@ -104,7 +93,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun getTrailers(id:Int, adapter: TrailersRecycleViewAdapter) {
-        networkViewModel.getTrailers(id, lang).observe(viewLifecycleOwner, {
+        viewModel.getTrailers(id, lang).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleTrailer.visibility = View.VISIBLE
                 adapter.trailersList = it as MutableList<Trailer>
@@ -115,7 +104,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun getReviews(id: Int, adapter: ReviewsRecyclerViewAdapter) {
-        networkViewModel.getReviews(id, lang).observe(viewLifecycleOwner, {
+        viewModel.getReviews(id, lang).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleReviews.visibility = View.VISIBLE
                 adapter.reviewsList = it as MutableList<Review>

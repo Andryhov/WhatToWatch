@@ -1,12 +1,13 @@
 package com.andriukhov.mymovies.repository
 
 import androidx.annotation.WorkerThread
+import com.andriukhov.mymovies.api.ApiHelper
 import com.andriukhov.mymovies.dao.MovieDao
 import com.andriukhov.mymovies.data.Favorite
 import com.andriukhov.mymovies.data.Movie
 import kotlinx.coroutines.flow.Flow
 
-class MoviesRepository(private val movieDao: MovieDao) {
+class MoviesRepository(private val movieDao: MovieDao, private val apiHelper: ApiHelper) {
 
     val getAllMovies = movieDao.getAllMoviesSortByDesc()
 
@@ -39,4 +40,14 @@ class MoviesRepository(private val movieDao: MovieDao) {
     suspend fun deleteAllMovies() {
         movieDao.deleteAllMovies()
     }
+
+    suspend fun getPopularityMovies(language: String, page: Int) =
+        apiHelper.getPopularityMovies(language, page)
+
+    suspend fun getTopRatedMovies(language: String, page: Int) =
+        apiHelper.getTopRatedMovies(language, page)
+
+    suspend fun getTrailers(id: Int, language: String) = apiHelper.getTrailers(id, language)
+
+    suspend fun getReviews(id: Int, language: String) = apiHelper.getReviews(id, language)
 }

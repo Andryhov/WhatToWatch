@@ -13,14 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
-import com.andriukhov.mymovies.api.ApiFactory
-import com.andriukhov.mymovies.api.ApiHelper
-import com.andriukhov.mymovies.databinding.FragmentPopularityBinding
 import com.andriukhov.mymovies.data.Movie
+import com.andriukhov.mymovies.databinding.FragmentPopularityBinding
 import com.andriukhov.mymovies.listener.OnReachEndListener
 import com.andriukhov.mymovies.listener.PosterClickListener
-import com.andriukhov.mymovies.viewModels.RetrofitViewModel
-import com.andriukhov.mymovies.viewModels.RetrofitViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -28,7 +24,6 @@ import java.util.*
 class PopularityFragment : Fragment() {
 
     private var popularityViewModel: PopularityViewModel? = null
-    private lateinit var retrofitViewModel: RetrofitViewModel
     private var _binding: FragmentPopularityBinding? = null
     private var adapter = MoviesRecyclerViewAdapter()
 
@@ -74,6 +69,12 @@ class PopularityFragment : Fragment() {
         clickOnPoster()
     }
 
+    override fun onResume() {
+        super.onResume()
+        isLoading = false
+        popularityViewModel?.cacheListMovie?.clear()
+    }
+
     private fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             page = savedInstanceState.getInt("page")
@@ -91,12 +92,6 @@ class PopularityFragment : Fragment() {
                         .moviesRepository
                 )
             )[PopularityViewModel::class.java]
-
-        retrofitViewModel =
-            ViewModelProvider(
-                this,
-                RetrofitViewModelFactory(ApiHelper(ApiFactory.getInstance()!!.getApiService()))
-            )[RetrofitViewModel::class.java]
     }
 
     private fun clickOnPoster() {
@@ -110,19 +105,13 @@ class PopularityFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        isLoading = false
-        popularityViewModel?.cacheListMovie?.clear()
-    }
-
     private fun getColumnCount(): Int {
         val displayMetrics = resources.displayMetrics
         val fl = (displayMetrics.widthPixels / displayMetrics.density).toInt()
         return if (fl / 185 > 2) fl / 185 else 2
     }
 
-    private fun loadMoviesFromDb() {
+    private fun updateAdapterFromDb() {
         popularityViewModel?.allMovies?.observe(viewLifecycleOwner, {
             if (page == 1) {
                 this.adapter.listMovies = it as MutableList<Movie>
@@ -143,7 +132,7 @@ class PopularityFragment : Fragment() {
     }
 
     private fun getMovies() {
-        retrofitViewModel.getPopularityMovies(lang, page).observe(viewLifecycleOwner, {
+        popularityViewModel?.getPopularityMovies(lang, page)?.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 if (popularityViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
                     removeMoviesFromAll()
@@ -152,7 +141,7 @@ class PopularityFragment : Fragment() {
                     page++
                 }
             } else {
-                loadMoviesFromDb()
+                updateAdapterFromDb()
                 Toast.makeText(
                     this.context,
                     getString(R.string.no_internet_connection),

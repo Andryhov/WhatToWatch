@@ -13,14 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
-import com.andriukhov.mymovies.api.ApiFactory
-import com.andriukhov.mymovies.api.ApiHelper
-import com.andriukhov.mymovies.databinding.FragmentTopratedBinding
 import com.andriukhov.mymovies.data.Movie
+import com.andriukhov.mymovies.databinding.FragmentTopratedBinding
 import com.andriukhov.mymovies.listener.OnReachEndListener
 import com.andriukhov.mymovies.listener.PosterClickListener
-import com.andriukhov.mymovies.viewModels.RetrofitViewModel
-import com.andriukhov.mymovies.viewModels.RetrofitViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -28,7 +24,6 @@ import java.util.*
 class TopRatedFragment : Fragment() {
 
     private lateinit var ratedViewModel: RatedViewModel
-    private lateinit var networkViewModel: RetrofitViewModel
     private var _binding: FragmentTopratedBinding? = null
     private var adapter = MoviesRecyclerViewAdapter()
 
@@ -84,19 +79,9 @@ class TopRatedFragment : Fragment() {
 
     private fun initViewModel() {
         ratedViewModel =
-            ViewModelProvider(
-                this,
-                RatedViewModel.RatedViewModelFactory(
+            ViewModelProvider(this, RatedViewModel.RatedViewModelFactory(
                     (requireNotNull(this.activity).application as MoviesApplication)
-                        .moviesRepository
-                )
-            )[RatedViewModel::class.java]
-
-        networkViewModel =
-            ViewModelProvider(
-                this,
-                RetrofitViewModelFactory(ApiHelper(ApiFactory.getInstance()!!.getApiService()))
-            )[RetrofitViewModel::class.java]
+                        .moviesRepository))[RatedViewModel::class.java]
     }
 
     private fun clickOnPoster() {
@@ -143,7 +128,7 @@ class TopRatedFragment : Fragment() {
     }
 
     private fun getMovies() {
-        networkViewModel.getTopRatedMovies(lang, page).observe(viewLifecycleOwner, {
+        ratedViewModel.getTopRatedMovies(lang, page).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 if (ratedViewModel.cacheListMovie.size == 0 && !adapter.listMovies.containsAll(it)) {
                     clearMoviesFromAll()
