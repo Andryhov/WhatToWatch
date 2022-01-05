@@ -1,6 +1,7 @@
 package com.andriukhov.mymovies.ui.popularity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class PopularityFragment : Fragment() {
         getMovies()
         reachEndListener()
         clickOnPoster()
+        getException()
     }
 
     override fun onResume() {
@@ -133,25 +135,27 @@ class PopularityFragment : Fragment() {
 
     private fun getMovies() {
         popularityViewModel?.getPopularityMovies(lang, page)?.observe(viewLifecycleOwner, {
-            if (it.isNotEmpty()) {
-                if (popularityViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
-                    removeMoviesFromAll()
-                    it.forEach { movie -> popularityViewModel?.addMovie(movie) }
-                    adapter.listMovies = it as MutableList<Movie>
-                    page++
-                }
-            } else {
-                updateAdapterFromDb()
-                Toast.makeText(
-                    this.context,
-                    getString(R.string.no_internet_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
+            if (popularityViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
+                removeMoviesFromAll()
+                it.forEach { movie -> popularityViewModel?.addMovie(movie) }
+                adapter.listMovies = it as MutableList<Movie>
+                page++
             }
             isLoading = false
             lifecycleScope.launch(Dispatchers.Main) {
                 binding.progressBarLoading.visibility = View.INVISIBLE
             }
+        })
+    }
+
+    private fun getException() {
+        popularityViewModel?.exception?.observe(viewLifecycleOwner, {
+            updateAdapterFromDb()
+            Toast.makeText(
+                this.context,
+                getString(R.string.no_internet_connection),
+                Toast.LENGTH_LONG
+            ).show()
         })
     }
 

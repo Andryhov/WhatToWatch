@@ -39,20 +39,23 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        val recyclerViewFavorite = binding.recyclerViewFavorite
+        recyclerViewFavorite.adapter = adapter
+        recyclerViewFavorite.layoutManager = GridLayoutManager(this.context, 2)
+        loadFavoriteMovie()
+        clickOnPoster()
+    }
+
+    private fun initViewModel() {
         favoriteViewModel =
             ViewModelProvider(
                 this,
                 FavoriteViewModel.FavouriteViewModelFactory((requireNotNull(this.activity).application as MoviesApplication).moviesRepository)
             )[FavoriteViewModel::class.java]
-
-        val recyclerViewFavorite = binding.recyclerViewFavorite
-        recyclerViewFavorite.adapter = adapter
-        recyclerViewFavorite.layoutManager = GridLayoutManager(this.context, 2)
-        loadFavoriteMovie(adapter)
-        clickOnPoster(adapter)
     }
 
-    private fun loadFavoriteMovie(adapter: MoviesRecyclerViewAdapter) {
+    private fun loadFavoriteMovie() {
         favoriteViewModel.allFavouriteMovies.observe(viewLifecycleOwner, {
             adapter.clear()
             if (it != null) {
@@ -63,7 +66,7 @@ class FavoriteFragment : Fragment() {
         })
     }
 
-    private fun clickOnPoster(adapter: MoviesRecyclerViewAdapter) {
+    private fun clickOnPoster() {
         adapter.posterClickListener = object : PosterClickListener {
             override fun onPosterClickListener(position: Int) {
                 val movie = adapter.listMovies[position]

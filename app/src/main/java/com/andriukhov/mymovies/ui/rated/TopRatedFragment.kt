@@ -67,6 +67,13 @@ class TopRatedFragment : Fragment() {
         getMovies()
         reachEndListener()
         clickOnPoster()
+        getException()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isLoading = false
+        ratedViewModel.cacheListMovie.clear()
     }
 
     private fun loadInstanceState(savedInstanceState: Bundle?) {
@@ -79,9 +86,12 @@ class TopRatedFragment : Fragment() {
 
     private fun initViewModel() {
         ratedViewModel =
-            ViewModelProvider(this, RatedViewModel.RatedViewModelFactory(
+            ViewModelProvider(
+                this, RatedViewModel.RatedViewModelFactory(
                     (requireNotNull(this.activity).application as MoviesApplication)
-                        .moviesRepository))[RatedViewModel::class.java]
+                        .moviesRepository
+                )
+            )[RatedViewModel::class.java]
     }
 
     private fun clickOnPoster() {
@@ -95,19 +105,13 @@ class TopRatedFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        isLoading = false
-        ratedViewModel.cacheListMovie.clear()
-    }
-
     private fun getColumnCount(): Int {
         val displayMetrics = resources.displayMetrics
         val fl = (displayMetrics.widthPixels / displayMetrics.density).toInt()
         return if (fl / 185 > 2) fl / 185 else 2
     }
 
-    private fun loadMoviesFromDb() {
+    private fun getMoviesFromDb() {
         ratedViewModel.allMovies.observe(viewLifecycleOwner, {
             if (page == 1) {
                 this.adapter.listMovies = it as MutableList<Movie>
@@ -129,25 +133,27 @@ class TopRatedFragment : Fragment() {
 
     private fun getMovies() {
         ratedViewModel.getTopRatedMovies(lang, page).observe(viewLifecycleOwner, {
-            if (it.isNotEmpty()) {
-                if (ratedViewModel.cacheListMovie.size == 0 && !adapter.listMovies.containsAll(it)) {
-                    clearMoviesFromAll()
-                    it.forEach { movie -> ratedViewModel.addMovie(movie) }
-                    adapter.listMovies = it as MutableList<Movie>
-                    page++
-                }
-            } else {
-                loadMoviesFromDb()
-                Toast.makeText(
-                    this.context,
-                    getString(R.string.no_internet_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
+            if (ratedViewModel.cacheListMovie.size == 0 && !adapter.listMovies.containsAll(it)) {
+                clearMoviesFromAll()
+                it.forEach { movie -> ratedViewModel.addMovie(movie) }
+                adapter.listMovies = it as MutableList<Movie>
+                page++
             }
             isLoading = false
             lifecycleScope.launch(Dispatchers.Main) {
                 binding.progressBarLoading.visibility = View.INVISIBLE
             }
+        })
+    }
+
+    private fun getException() {
+        ratedViewModel.exception.observe(viewLifecycleOwner, {
+            getMoviesFromDb()
+            Toast.makeText(
+                this.context,
+                getString(R.string.no_internet_connection),
+                Toast.LENGTH_LONG
+            ).show()
         })
     }
 

@@ -1,13 +1,17 @@
 package com.andriukhov.mymovies.ui.popularity
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.repository.MoviesRepository
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 class PopularityViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     var cacheListMovie = mutableListOf<Movie>()
+
+    var exception = MutableLiveData<Throwable>()
 
     private val dataMovies = MutableLiveData<List<Movie>>()
 
@@ -20,7 +24,12 @@ class PopularityViewModel(private val repository: MoviesRepository) : ViewModel(
 
     private fun loadMovies(language: String, page: Int) {
         viewModelScope.launch {
-            dataMovies.value = repository.getPopularityMovies(language, page).results
+            try {
+                dataMovies.value = repository.getPopularityMovies(language, page).results
+            } catch (e: UnknownHostException) {
+                exception.value = e
+                Log.i("Network error", e.message.toString())
+            }
         }
     }
 
