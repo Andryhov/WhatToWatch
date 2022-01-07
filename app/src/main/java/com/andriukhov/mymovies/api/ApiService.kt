@@ -1,9 +1,11 @@
 package com.andriukhov.mymovies.api
 
+import com.andriukhov.mymovies.data.Genre
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.data.Review
 import com.andriukhov.mymovies.data.Trailer
-import com.andriukhov.mymovies.pojo.Response
+import com.andriukhov.mymovies.pojo.DataResponse
+import com.andriukhov.mymovies.pojo.GenreResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,23 +24,28 @@ interface ApiService {
     suspend fun getPopularityMovies(
         @Query("language") language: String,
         @Query("page") page: Int
-    ): Response<Movie>
+    ): DataResponse<Movie>
 
     @GET("discover/movie?api_key=$API_KEY&sort_by=$SORT_BY_TOP_RATED&$PARAMS_MIN_VOTE_COUNT=$MIN_VOTE_COUNT_VALUE")
     suspend fun getTopRatedMovies(
         @Query("language") language: String,
         @Query("page") page: Int
-    ): Response<Movie>
+    ): DataResponse<Movie>
 
     @GET("movie/{id}/videos?api_key=$API_KEY")
     suspend fun getTrailers(
         @Path("id") id: Int,
         @Query("language") language: String
-    ): Response<Trailer>
+    ): DataResponse<Trailer>
 
     @GET("movie/{id}/reviews?api_key=$API_KEY")
     suspend fun getReviews(
         @Path("id") id: Int,
         @Query("language") language: String
-    ): Response<Review>
+    ): DataResponse<Review>
+
+    @GET("genre/movie/list?api_key=$API_KEY")
+    suspend fun getGenres(
+        @Query("language") language: String
+    ): GenreResponse
 }

@@ -10,4 +10,6 @@ class ApiHelper(private val apiService: ApiService) {
     suspend fun getTrailers(id: Int, language: String) = apiService.getTrailers(id, language)
 
     suspend fun getReviews(id: Int, language: String) = apiService.getReviews(id, language)
+
+    suspend fun getGenres(language: String) = apiService.getGenres(language)
 }

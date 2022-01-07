@@ -1,10 +1,11 @@
 package com.andriukhov.mymovies.pojo
 
+import com.andriukhov.mymovies.data.Genre
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Response <T> (
-    @SerializedName("results")
+data class GenreResponse(
+    @SerializedName("genres")
     @Expose
-    val results: List<T>
+    val genres: List<Genre>
 )

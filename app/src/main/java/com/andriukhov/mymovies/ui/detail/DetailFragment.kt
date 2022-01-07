@@ -66,7 +66,6 @@ class DetailFragment : Fragment() {
         val id = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
 
-
         checkMovieLoadFrom(id)
         getTrailers(id, adapterTrailer)
         getReviews(id, adapterReview)
@@ -146,18 +145,18 @@ class DetailFragment : Fragment() {
     private fun loadDataOfFavoriteMovie(movieId: Int) {
         val movie = viewModel.getFavoriteMovieById(movieId)
         movie.observe(viewLifecycleOwner, {
-            setMovieData(it, movieId)
+            setDataOfMovie(it, movieId)
         })
     }
 
     private fun loadDataOfMovies(id: Int) {
         val movie = viewModel.getMovieById(id)
         movie.observe(viewLifecycleOwner, {
-            setMovieData(it, id)
+            setDataOfMovie(it, id)
         })
     }
 
-    private fun setMovieData(it: Movie?, id: Int) {
+    private fun setDataOfMovie(it: Movie?, id: Int) {
         if (it != null) {
             this.movie = it
             Picasso.get().load(BASE_URL_IMG + BIG_POSTER_SIZE + it.posterPath)
@@ -169,12 +168,12 @@ class DetailFragment : Fragment() {
                 binding.movieInfo.textViewRatingText.text = voteAverage.toString()
                 binding.movieInfo.textViewReleaseDataText.text = releaseDate
                 binding.movieInfo.textViewDescriptionText.text = overview
-                loadFavoriteStatus(id)
+                setFavoriteStatus(id)
             }
         }
     }
 
-    private fun loadFavoriteStatus(id: Int): Boolean {
+    private fun setFavoriteStatus(id: Int): Boolean {
         var status = false
         viewModel.getFavoriteMovieById(id).observe(viewLifecycleOwner, {
             if (it != null) {

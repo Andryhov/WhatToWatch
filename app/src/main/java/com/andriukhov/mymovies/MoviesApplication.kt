@@ -10,6 +10,7 @@ class MoviesApplication : Application() {
     private val moviesDatabase by lazy { MovieDatabase.getInstance(this) }
     val moviesRepository by lazy {
         MoviesRepository(
+            moviesDatabase.genreDao(),
             moviesDatabase.movieDao(),
             ApiHelper(ApiFactory.getInstance()!!.getApiService())
         )

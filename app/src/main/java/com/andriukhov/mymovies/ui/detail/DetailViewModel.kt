@@ -2,10 +2,7 @@ package com.andriukhov.mymovies.ui.detail
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.andriukhov.mymovies.data.Favorite
-import com.andriukhov.mymovies.data.Movie
-import com.andriukhov.mymovies.data.Review
-import com.andriukhov.mymovies.data.Trailer
+import com.andriukhov.mymovies.data.*
 import com.andriukhov.mymovies.repository.MoviesRepository
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
@@ -15,6 +12,8 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
     private val dataReviews = MutableLiveData<List<Review>>()
 
     private val dataTrailers = MutableLiveData<List<Trailer>>()
+
+    private val dataGenres = MutableLiveData<List<Genre>>()
 
     fun getTrailers(id: Int, language: String): LiveData<List<Trailer>> {
         loadTrailers(id, language)
@@ -42,6 +41,17 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
                 dataReviews.value = repository.getReviews(id, language).results
             } catch (e: UnknownHostException) {
                 Log.i("Reviews load error", e.message.toString())
+            }
+        }
+    }
+
+    private fun loadGenres(language: String) {
+        viewModelScope.launch {
+           val genres: List<Genre> = repository.loadGenres(language).genres
+            if(!genres.isNullOrEmpty()) {
+                genres.forEach {
+                    repository.insertGenre(it)
+                }
             }
         }
     }
