@@ -51,6 +51,13 @@ class MoviesRepository(
         return genreDao.insertGenre(genre)
     }
 
+    fun getGenreById(id: Int): Flow<Genre> {
+        return genreDao.getGenreById(id)
+    }
+
+    fun getAllGenre(): Flow<List<Genre>> {
+        return genreDao.getAllGenres()
+    }
 
     suspend fun getPopularityMovies(language: String, page: Int) =
         apiHelper.getPopularityMovies(language, page)

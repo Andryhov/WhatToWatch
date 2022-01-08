@@ -15,7 +15,7 @@ class Converter {
         val gson = Gson()
         val objects = gson.fromJson(genreIdsString, ArrayList::class.java)
         val genres = mutableListOf<Int>()
-        repeat(objects.size) {
+        objects.forEach {
             genres.add(gson.fromJson(it.toString(), Int::class.java))
         }
         return genres

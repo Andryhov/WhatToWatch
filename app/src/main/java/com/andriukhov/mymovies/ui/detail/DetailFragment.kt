@@ -3,6 +3,7 @@ package com.andriukhov.mymovies.ui.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,6 @@ import com.andriukhov.mymovies.data.Trailer
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.listener.TrailerClickListener
 import com.squareup.picasso.Picasso
-import java.util.*
 
 class DetailFragment : Fragment() {
 
@@ -30,10 +30,10 @@ class DetailFragment : Fragment() {
     private var favouriteMovie: Favorite? = null
     private lateinit var movie: Movie
     private var from = ""
+    private var idMovie = -1
 
     companion object {
-//        fun newInstance() = DetailFragment()
-        private lateinit var lang: String
+        //        fun newInstance() = DetailFragment()
         private const val BASE_URL_IMG = "https://image.tmdb.org/t/p"
         private const val BASE_URL_YOUTUBE = "https://www.youtube.com/watch?v="
         private const val BIG_POSTER_SIZE = "/w780"
@@ -51,8 +51,6 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
 
-        lang = Locale.getDefault().language
-
         val trailerRecycleView = binding.movieInfo.recyclerViewTrailers
         val adapterTrailer = TrailersRecycleViewAdapter()
         trailerRecycleView.adapter = adapterTrailer
@@ -63,12 +61,12 @@ class DetailFragment : Fragment() {
         reviewRecyclerView.adapter = adapterReview
         reviewRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
-        val id = arguments?.getInt("id") ?: -1
+        idMovie = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
 
-        checkMovieLoadFrom(id)
-        getTrailers(id, adapterTrailer)
-        getReviews(id, adapterReview)
+        checkMovieLoadFrom()
+        getTrailers(adapterTrailer)
+        getReviews(adapterReview)
         clickFavoriteStar()
         clickOnTrailer(adapterTrailer)
     }
@@ -91,8 +89,8 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun getTrailers(id:Int, adapter: TrailersRecycleViewAdapter) {
-        viewModel.getTrailers(id, lang).observe(viewLifecycleOwner, {
+    private fun getTrailers(adapter: TrailersRecycleViewAdapter) {
+        viewModel.getTrailers(idMovie).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleTrailer.visibility = View.VISIBLE
                 adapter.trailersList = it as MutableList<Trailer>
@@ -102,8 +100,8 @@ class DetailFragment : Fragment() {
         })
     }
 
-    private fun getReviews(id: Int, adapter: ReviewsRecyclerViewAdapter) {
-        viewModel.getReviews(id, lang).observe(viewLifecycleOwner, {
+    private fun getReviews(adapter: ReviewsRecyclerViewAdapter) {
+        viewModel.getReviews(idMovie).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleReviews.visibility = View.VISIBLE
                 adapter.reviewsList = it as MutableList<Review>
@@ -134,29 +132,29 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun checkMovieLoadFrom(id: Int) {
+    private fun checkMovieLoadFrom() {
         if (from == "favorite") {
-            loadDataOfFavoriteMovie(id)
+            loadDataOfFavoriteMovie()
         } else {
-            loadDataOfMovies(id)
+            loadDataOfMovies()
         }
     }
 
-    private fun loadDataOfFavoriteMovie(movieId: Int) {
-        val movie = viewModel.getFavoriteMovieById(movieId)
+    private fun loadDataOfFavoriteMovie() {
+        val movie = viewModel.getFavoriteMovieById(idMovie)
         movie.observe(viewLifecycleOwner, {
-            setDataOfMovie(it, movieId)
+            setInfoOfMovie(it)
         })
     }
 
-    private fun loadDataOfMovies(id: Int) {
-        val movie = viewModel.getMovieById(id)
+    private fun loadDataOfMovies() {
+        val movie = viewModel.getMovieById(idMovie)
         movie.observe(viewLifecycleOwner, {
-            setDataOfMovie(it, id)
+            setInfoOfMovie(it)
         })
     }
 
-    private fun setDataOfMovie(it: Movie?, id: Int) {
+    private fun setInfoOfMovie(it: Movie?) {
         if (it != null) {
             this.movie = it
             Picasso.get().load(BASE_URL_IMG + BIG_POSTER_SIZE + it.posterPath)
@@ -168,14 +166,21 @@ class DetailFragment : Fragment() {
                 binding.movieInfo.textViewRatingText.text = voteAverage.toString()
                 binding.movieInfo.textViewReleaseDataText.text = releaseDate
                 binding.movieInfo.textViewDescriptionText.text = overview
-                setFavoriteStatus(id)
+                setFavoriteStatus(it)
+                setGenres(it)
             }
         }
     }
 
-    private fun setFavoriteStatus(id: Int): Boolean {
+    private fun setGenres(movie: Movie) {
+        viewModel.getGenresName(movie.genreIds).observe(viewLifecycleOwner, {
+           //todo
+        })
+    }
+
+    private fun setFavoriteStatus(movie: Movie): Boolean {
         var status = false
-        viewModel.getFavoriteMovieById(id).observe(viewLifecycleOwner, {
+        viewModel.getFavoriteMovieById(movie.id).observe(viewLifecycleOwner, {
             if (it != null) {
                 favouriteMovie = it
                 binding.imageViewFavoriteStar.setImageResource(R.drawable.favourite_remove)

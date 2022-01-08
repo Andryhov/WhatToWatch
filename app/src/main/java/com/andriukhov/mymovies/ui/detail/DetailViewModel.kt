@@ -6,6 +6,7 @@ import com.andriukhov.mymovies.data.*
 import com.andriukhov.mymovies.repository.MoviesRepository
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
+import java.util.*
 
 class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
@@ -13,14 +14,16 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     private val dataTrailers = MutableLiveData<List<Trailer>>()
 
-    private val dataGenres = MutableLiveData<List<Genre>>()
+    private val dataGenresName = MutableLiveData<List<String>>()
 
-    fun getTrailers(id: Int, language: String): LiveData<List<Trailer>> {
-        loadTrailers(id, language)
+    private val language = Locale.getDefault().language
+
+    fun getTrailers(id: Int): LiveData<List<Trailer>> {
+        loadTrailers(id)
         return dataTrailers
     }
 
-    private fun loadTrailers(id: Int, language: String) {
+    private fun loadTrailers(id: Int) {
         viewModelScope.launch {
             try {
                 dataTrailers.value = repository.getTrailers(id, language).results
@@ -30,12 +33,12 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
         }
     }
 
-    fun getReviews(id: Int, language: String): LiveData<List<Review>> {
-        loadReviews(id, language)
+    fun getReviews(id: Int): LiveData<List<Review>> {
+        loadReviews(id)
         return dataReviews
     }
 
-    private fun loadReviews(id: Int, language: String) {
+    private fun loadReviews(id: Int) {
         viewModelScope.launch {
             try {
                 dataReviews.value = repository.getReviews(id, language).results
@@ -45,14 +48,21 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
         }
     }
 
-    private fun loadGenres(language: String) {
+    fun getGenresName(list: List<Int>): LiveData<List<String>> {
+        loadGenres(list)
+        return dataGenresName
+    }
+
+    private fun loadGenres(list: List<Int>) {
         viewModelScope.launch {
-           val genres: List<Genre> = repository.loadGenres(language).genres
-            if(!genres.isNullOrEmpty()) {
-                genres.forEach {
-                    repository.insertGenre(it)
+            val genres: List<Genre> = repository.loadGenres(language).genres
+            val listGeneresName = mutableListOf<String>()
+            if (!genres.isNullOrEmpty()) {
+                list.forEach { id ->
+                    listGeneresName.add(genres.last { genre -> genre.id == id }.name)
                 }
             }
+            dataGenresName.value = listGeneresName
         }
     }
 
