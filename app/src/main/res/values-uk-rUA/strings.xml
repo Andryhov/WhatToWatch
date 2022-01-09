@@ -20,4 +20,5 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="remove_from_favorite">Видалено з обраного</string>
     <string name="add_to_favorite">Додано до вибраного</string>
+    <string name="genre">Жанри:</string>
 </resources>

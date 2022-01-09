@@ -3,7 +3,6 @@ package com.andriukhov.mymovies.ui.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
+import com.andriukhov.mymovies.adapter.GenreRecyclerViewAdapter
 import com.andriukhov.mymovies.adapter.ReviewsRecyclerViewAdapter
 import com.andriukhov.mymovies.adapter.TrailersRecycleViewAdapter
 import com.andriukhov.mymovies.data.Favorite
@@ -21,12 +21,20 @@ import com.andriukhov.mymovies.data.Review
 import com.andriukhov.mymovies.data.Trailer
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.listener.TrailerClickListener
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.squareup.picasso.Picasso
 
 class DetailFragment : Fragment() {
 
     private lateinit var binding: DetailFragmentBinding
     private lateinit var viewModel: DetailViewModel
+
+    private lateinit var genreAdapter: GenreRecyclerViewAdapter
+    private lateinit var trailerAdapter: TrailersRecycleViewAdapter
+    private lateinit var reviewAdapter: ReviewsRecyclerViewAdapter
+
     private var favouriteMovie: Favorite? = null
     private lateinit var movie: Movie
     private var from = ""
@@ -37,6 +45,13 @@ class DetailFragment : Fragment() {
         private const val BASE_URL_IMG = "https://image.tmdb.org/t/p"
         private const val BASE_URL_YOUTUBE = "https://www.youtube.com/watch?v="
         private const val BIG_POSTER_SIZE = "/w780"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        genreAdapter = GenreRecyclerViewAdapter()
+        trailerAdapter = TrailersRecycleViewAdapter()
+        reviewAdapter = ReviewsRecyclerViewAdapter()
     }
 
     override fun onCreateView(
@@ -52,23 +67,28 @@ class DetailFragment : Fragment() {
         initViewModel()
 
         val trailerRecycleView = binding.movieInfo.recyclerViewTrailers
-        val adapterTrailer = TrailersRecycleViewAdapter()
-        trailerRecycleView.adapter = adapterTrailer
+        trailerRecycleView.adapter = trailerAdapter
         trailerRecycleView.layoutManager = LinearLayoutManager(this.context)
 
         val reviewRecyclerView = binding.movieInfo.recyclerViewReviews
-        val adapterReview = ReviewsRecyclerViewAdapter()
-        reviewRecyclerView.adapter = adapterReview
+        reviewRecyclerView.adapter = reviewAdapter
         reviewRecyclerView.layoutManager = LinearLayoutManager(this.context)
+
+        val genreRecyclerView = binding.movieInfo.recyclerViewGenres
+        val layoutManager = FlexboxLayoutManager(this.context)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.justifyContent = JustifyContent.FLEX_START
+        genreRecyclerView.adapter = genreAdapter
+        genreRecyclerView.layoutManager = layoutManager
 
         idMovie = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
 
         checkMovieLoadFrom()
-        getTrailers(adapterTrailer)
-        getReviews(adapterReview)
+        getTrailers()
+        getReviews()
         clickFavoriteStar()
-        clickOnTrailer(adapterTrailer)
+        clickOnTrailer()
     }
 
     private fun initViewModel() {
@@ -78,10 +98,10 @@ class DetailFragment : Fragment() {
         )[DetailViewModel::class.java]
     }
 
-    private fun clickOnTrailer(adapterTrailer: TrailersRecycleViewAdapter) {
-        adapterTrailer.trailerClickListener = object : TrailerClickListener {
+    private fun clickOnTrailer() {
+        trailerAdapter.trailerClickListener = object : TrailerClickListener {
             override fun onTrailerClickListener(position: Int) {
-                val trailer = adapterTrailer.trailersList[position]
+                val trailer = trailerAdapter.trailersList[position]
 
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL_YOUTUBE + trailer.key))
                 startActivity(intent)
@@ -89,22 +109,22 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun getTrailers(adapter: TrailersRecycleViewAdapter) {
+    private fun getTrailers() {
         viewModel.getTrailers(idMovie).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleTrailer.visibility = View.VISIBLE
-                adapter.trailersList = it as MutableList<Trailer>
+                trailerAdapter.trailersList = it as MutableList<Trailer>
             } else {
                 binding.movieInfo.textViewTitleTrailer.visibility = View.INVISIBLE
             }
         })
     }
 
-    private fun getReviews(adapter: ReviewsRecyclerViewAdapter) {
+    private fun getReviews() {
         viewModel.getReviews(idMovie).observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
                 binding.movieInfo.textViewTitleReviews.visibility = View.VISIBLE
-                adapter.reviewsList = it as MutableList<Review>
+                reviewAdapter.reviewsList = it as MutableList<Review>
             } else {
                 binding.movieInfo.textViewTitleReviews.visibility = View.INVISIBLE
             }
@@ -174,7 +194,7 @@ class DetailFragment : Fragment() {
 
     private fun setGenres(movie: Movie) {
         viewModel.getGenresName(movie.genreIds).observe(viewLifecycleOwner, {
-           //todo
+            genreAdapter.genreList = it as MutableList<String>
         })
     }
 

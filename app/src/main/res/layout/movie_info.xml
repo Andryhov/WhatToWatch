@@ -121,6 +121,35 @@
         app:layout_constraintTop_toBottomOf="@id/textViewReleaseDataText" />
 
     <TextView
+        android:id="@+id/textViewGenreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sp8"
+        android:text="@string/genre"
+        android:textColor="@color/detail_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/viewFourLine" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewGenres"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewGenreLabel" />
+
+    <View
+        android:id="@+id/viewSixLine"
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_margin="@dimen/sp8"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewGenres" />
+
+    <TextView
         android:id="@+id/textViewDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,7 +157,7 @@
         android:text="@string/description_label"
         android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewFourLine" />
+        app:layout_constraintTop_toBottomOf="@+id/viewSixLine" />
 
     <TextView
         android:id="@+id/textViewDescriptionText"
