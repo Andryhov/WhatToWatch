@@ -29,10 +29,7 @@ class TopRatedFragment : Fragment() {
 
     private var page = 1
     private var isLoading = false
-
-    companion object {
-        private lateinit var lang: String
-    }
+    private lateinit var lang: String
 
     private val binding get() = _binding!!
 

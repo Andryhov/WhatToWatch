@@ -40,13 +40,6 @@ class DetailFragment : Fragment() {
     private var from = ""
     private var idMovie = -1
 
-    companion object {
-        //        fun newInstance() = DetailFragment()
-        private const val BASE_URL_IMG = "https://image.tmdb.org/t/p"
-        private const val BASE_URL_YOUTUBE = "https://www.youtube.com/watch?v="
-        private const val BIG_POSTER_SIZE = "/w780"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         genreAdapter = GenreRecyclerViewAdapter()
@@ -103,7 +96,7 @@ class DetailFragment : Fragment() {
             override fun onTrailerClickListener(position: Int) {
                 val trailer = trailerAdapter.trailersList[position]
 
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL_YOUTUBE + trailer.key))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getFullTrailerPath()))
                 startActivity(intent)
             }
         }
@@ -177,7 +170,7 @@ class DetailFragment : Fragment() {
     private fun setInfoOfMovie(it: Movie?) {
         if (it != null) {
             this.movie = it
-            Picasso.get().load(BASE_URL_IMG + BIG_POSTER_SIZE + it.posterPath)
+            Picasso.get().load(it.getFullBigPosterPath())
                 .placeholder(R.drawable.placeholder)
                 .into(binding.imageViewBigPoster)
             with(it) {

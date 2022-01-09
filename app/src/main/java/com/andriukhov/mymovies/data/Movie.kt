@@ -1,6 +1,7 @@
 package com.andriukhov.mymovies.data
 
 import androidx.room.*
+import com.andriukhov.mymovies.api.ApiFactory
 import com.andriukhov.mymovies.converters.Converter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -81,4 +82,10 @@ open class Movie(
         favorite.releaseDate,
         favorite.genreIds
     )
+
+    fun getFullSmallPosterPath(): String =
+        ApiFactory.BASE_IMG_URL + ApiFactory.SMALL_POSTER_SIZE + posterPath
+
+    fun getFullBigPosterPath(): String =
+        ApiFactory.BASE_IMG_URL + ApiFactory.BIG_POSTER_SIZE + posterPath
 }

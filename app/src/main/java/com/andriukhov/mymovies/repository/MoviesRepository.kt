@@ -1,20 +1,16 @@
 package com.andriukhov.mymovies.repository
 
 import androidx.annotation.WorkerThread
-import com.andriukhov.mymovies.api.ApiHelper
-import com.andriukhov.mymovies.dao.GenreDao
+import com.andriukhov.mymovies.api.ApiService
 import com.andriukhov.mymovies.dao.MovieDao
 import com.andriukhov.mymovies.data.Favorite
-import com.andriukhov.mymovies.data.Genre
 import com.andriukhov.mymovies.data.Movie
 import kotlinx.coroutines.flow.Flow
 
 class MoviesRepository(
-    private val genreDao: GenreDao,
     private val movieDao: MovieDao,
-    private val apiHelper: ApiHelper
+    private val apiService: ApiService
 ) {
-
     val getAllMovies = movieDao.getAllMoviesSortByDesc()
 
     fun getMovieById(id: Int): Flow<Movie> = movieDao.getMovieById(id)
@@ -47,27 +43,15 @@ class MoviesRepository(
         movieDao.deleteAllMovies()
     }
 
-    suspend fun insertGenre(genre: Genre) {
-        return genreDao.insertGenre(genre)
-    }
-
-    fun getGenreById(id: Int): Flow<Genre> {
-        return genreDao.getGenreById(id)
-    }
-
-    fun getAllGenre(): Flow<List<Genre>> {
-        return genreDao.getAllGenres()
-    }
-
     suspend fun getPopularityMovies(language: String, page: Int) =
-        apiHelper.getPopularityMovies(language, page)
+        apiService.getPopularityMovies(language, page)
 
     suspend fun getTopRatedMovies(language: String, page: Int) =
-        apiHelper.getTopRatedMovies(language, page)
+        apiService.getTopRatedMovies(language, page)
 
-    suspend fun getTrailers(id: Int, language: String) = apiHelper.getTrailers(id, language)
+    suspend fun getTrailers(id: Int, language: String) = apiService.getTrailers(id, language)
 
-    suspend fun getReviews(id: Int, language: String) = apiHelper.getReviews(id, language)
+    suspend fun getReviews(id: Int, language: String) = apiService.getReviews(id, language)
 
-    suspend fun loadGenres(language: String) = apiHelper.getGenres(language)
+    suspend fun loadGenres(language: String) = apiService.getGenres(language)
 }

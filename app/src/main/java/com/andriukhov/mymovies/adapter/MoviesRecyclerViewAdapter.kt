@@ -17,11 +17,6 @@ class MoviesRecyclerViewAdapter :
     lateinit var posterClickListener: PosterClickListener
     lateinit var onReachEndListener: OnReachEndListener
 
-    companion object {
-        private const val BASE_IMG_URL = "https://image.tmdb.org/t/p"
-        private const val SMALL_POSTER_SIZE = "/w185"
-    }
-
     var listMovies = mutableListOf<Movie>()
         set(value) {
             listMovies.addAll(value)
@@ -64,7 +59,7 @@ class MoviesRecyclerViewAdapter :
             onReachEndListener.onReachEnd()
         }
         val movie = listMovies[position]
-        Picasso.get().load(BASE_IMG_URL + SMALL_POSTER_SIZE + movie.posterPath)
+        Picasso.get().load(movie.getFullSmallPosterPath())
             .placeholder(R.drawable.placeholder).into(holder.imageViewPoster)
         holder.textViewRaiting?.text = movie.voteAverage.toString()
         holder.textViewYear?.text = movie.releaseDate.substring(0, 4)
