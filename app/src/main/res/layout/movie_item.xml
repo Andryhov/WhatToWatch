@@ -4,42 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageViewSmallPoster"
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/main_poster"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/sp8">
 
-    <TextView
-        android:id="@+id/texViewYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/sp8"
-        android:shadowColor="#000000"
-        android:shadowDx="4"
-        android:shadowDy="5"
-        android:shadowRadius="4"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/imageViewSmallPoster"
-        app:layout_constraintStart_toStartOf="@id/imageViewSmallPoster" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/imageViewSmallPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/main_poster"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewRaiting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/sp8"
-        android:shadowColor="#000000"
-        android:shadowDx="4"
-        android:shadowDy="5"
-        android:shadowRadius="4"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/imageViewSmallPoster"
-        app:layout_constraintTop_toTopOf="@id/imageViewSmallPoster" />
+            <TextView
+                android:id="@+id/texViewYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sp8"
+                android:shadowColor="#000000"
+                android:shadowDx="4"
+                android:shadowDy="5"
+                android:shadowRadius="4"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewSmallPoster"
+                app:layout_constraintStart_toStartOf="@id/imageViewSmallPoster" />
+
+            <TextView
+                android:id="@+id/textViewRaiting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sp8"
+                android:shadowColor="#000000"
+                android:shadowDx="4"
+                android:shadowDy="5"
+                android:shadowRadius="4"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/imageViewSmallPoster"
+                app:layout_constraintTop_toTopOf="@id/imageViewSmallPoster" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
