@@ -22,4 +22,5 @@
     <string name="add_to_favorite">Added to favorites</string>
     <string name="remove_from_favorite">Removed from favorites</string>
     <string name="genre">Genres:</string>
+    <string name="back_drop_image">back drop image</string>
 </resources>
