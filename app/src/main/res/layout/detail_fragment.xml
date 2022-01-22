@@ -10,16 +10,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageViewBigPoster"
+        <FrameLayout
+            android:id="@+id/frameBackDropImg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/main_poster"
+            android:foreground="#99000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_dialog" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewBigPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/back_drop_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/btn_dialog" />
+        </FrameLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="@id/frameBackDropImg"
+            app:layout_constraintStart_toStartOf="@id/frameBackDropImg"
+            app:layout_constraintTop_toTopOf="@id/frameBackDropImg">
+
+            <ImageView
+                android:id="@+id/imageViewSmallPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/main_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/btn_dialog" />
+        </androidx.cardview.widget.CardView>
+
 
         <ImageView
             android:id="@+id/imageViewFavoriteStar"
@@ -29,9 +61,9 @@
             android:clickable="true"
             android:contentDescription="@string/favourite_star"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/imageViewBigPoster"
+            app:layout_constraintBottom_toBottomOf="@+id/frameBackDropImg"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster"
+            app:layout_constraintTop_toBottomOf="@+id/frameBackDropImg"
             app:srcCompat="@drawable/favourite_add_to" />
 
         <include

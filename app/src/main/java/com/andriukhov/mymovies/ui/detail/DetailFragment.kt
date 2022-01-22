@@ -170,9 +170,13 @@ class DetailFragment : Fragment() {
     private fun setInfoOfMovie(it: Movie?) {
         if (it != null) {
             this.movie = it
-            Picasso.get().load(it.getFullBigPosterPath())
-                .placeholder(R.drawable.placeholder)
-                .into(binding.imageViewBigPoster)
+            if (binding.imageViewSmallPoster == null) {
+                Picasso.get().load(it.getFullBigPosterPath())
+                    .placeholder(R.drawable.placeholder)
+                    .into(binding.imageViewBigPoster)
+            } else {
+                templateImgForLandscape(it)
+            }
             with(it) {
                 binding.movieInfo.textViewNameText.text = title
                 binding.movieInfo.textViewOriginalTitleText.text = originalTitle
@@ -183,6 +187,14 @@ class DetailFragment : Fragment() {
                 setGenres(it)
             }
         }
+    }
+
+    private fun templateImgForLandscape(movie: Movie) {
+        Picasso.get().load(movie.getFullBackDropPosterPath())
+            .placeholder(R.drawable.placeholder)
+            .into(binding.imageViewBigPoster)
+        Picasso.get().load(movie.getFullBigPosterPath())
+            .into(binding.imageViewSmallPoster)
     }
 
     private fun setGenres(movie: Movie) {

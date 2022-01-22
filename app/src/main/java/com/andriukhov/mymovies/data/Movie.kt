@@ -88,4 +88,7 @@ open class Movie(
 
     fun getFullBigPosterPath(): String =
         ApiFactory.BASE_IMG_URL + ApiFactory.BIG_POSTER_SIZE + posterPath
+
+    fun getFullBackDropPosterPath(): String =
+        ApiFactory.BASE_IMG_URL + ApiFactory.BIG_POSTER_SIZE + backDropPath
 }
