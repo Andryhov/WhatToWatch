@@ -105,7 +105,7 @@ class TopRatedFragment : Fragment() {
     private fun getColumnCount(): Int {
         val displayMetrics = resources.displayMetrics
         val fl = (displayMetrics.widthPixels / displayMetrics.density).toInt()
-        return if (fl / 185 > 2) fl / 185 else 2
+        return if (fl / 185 > 3) fl / 185 else 3
     }
 
     private fun getMoviesFromDb() {
