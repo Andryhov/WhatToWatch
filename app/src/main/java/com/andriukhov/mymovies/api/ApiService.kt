@@ -1,11 +1,11 @@
 package com.andriukhov.mymovies.api
 
-import com.andriukhov.mymovies.data.Genre
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.data.Review
 import com.andriukhov.mymovies.data.Trailer
 import com.andriukhov.mymovies.pojo.DataResponse
 import com.andriukhov.mymovies.pojo.GenreResponse
+import com.andriukhov.mymovies.pojo.ImagesResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -48,4 +48,10 @@ interface ApiService {
     suspend fun getGenres(
         @Query("language") language: String
     ): GenreResponse
+
+    @GET("movie/{id}/images?api_key=$API_KEY&include_image_language=null")
+    suspend fun getImages(
+        @Path("id") id: Int,
+        @Query("language") language: String
+    ): ImagesResponse
 }

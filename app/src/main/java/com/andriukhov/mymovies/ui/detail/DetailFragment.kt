@@ -6,19 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.GenreRecyclerViewAdapter
+import com.andriukhov.mymovies.adapter.ImagesRecycleViewAdapter
 import com.andriukhov.mymovies.adapter.ReviewsRecyclerViewAdapter
 import com.andriukhov.mymovies.adapter.TrailersRecycleViewAdapter
-import com.andriukhov.mymovies.data.Favorite
-import com.andriukhov.mymovies.data.Movie
-import com.andriukhov.mymovies.data.Review
-import com.andriukhov.mymovies.data.Trailer
+import com.andriukhov.mymovies.data.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.listener.TrailerClickListener
 import com.google.android.flexbox.FlexDirection
@@ -34,6 +34,7 @@ class DetailFragment : Fragment() {
     private lateinit var genreAdapter: GenreRecyclerViewAdapter
     private lateinit var trailerAdapter: TrailersRecycleViewAdapter
     private lateinit var reviewAdapter: ReviewsRecyclerViewAdapter
+    private lateinit var imageAdapter: ImagesRecycleViewAdapter
 
     private var favouriteMovie: Favorite? = null
     private lateinit var movie: Movie
@@ -45,6 +46,7 @@ class DetailFragment : Fragment() {
         genreAdapter = GenreRecyclerViewAdapter()
         trailerAdapter = TrailersRecycleViewAdapter()
         reviewAdapter = ReviewsRecyclerViewAdapter()
+        imageAdapter = ImagesRecycleViewAdapter()
     }
 
     override fun onCreateView(
@@ -74,6 +76,10 @@ class DetailFragment : Fragment() {
         genreRecyclerView.adapter = genreAdapter
         genreRecyclerView.layoutManager = layoutManager
 
+        val imageRecyclerView = binding.movieInfo.recyclerViewImages
+        imageRecyclerView.adapter = imageAdapter
+        imageRecyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+
         idMovie = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
 
@@ -82,6 +88,7 @@ class DetailFragment : Fragment() {
         getReviews()
         clickFavoriteStar()
         clickOnTrailer()
+        observeImages()
     }
 
     private fun initViewModel() {
@@ -109,6 +116,14 @@ class DetailFragment : Fragment() {
                 trailerAdapter.trailersList = it as MutableList<Trailer>
             } else {
                 binding.movieInfo.textViewTitleTrailer.visibility = View.INVISIBLE
+            }
+        })
+    }
+
+    private fun observeImages() {
+        viewModel.getImages(idMovie).observe(viewLifecycleOwner, {
+            if(it.isNotEmpty()) {
+                imageAdapter.images = it as MutableList<Image>
             }
         })
     }

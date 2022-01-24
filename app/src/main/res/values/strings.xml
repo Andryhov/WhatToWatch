@@ -23,4 +23,6 @@
     <string name="remove_from_favorite">Removed from favorites</string>
     <string name="genre">Genres:</string>
     <string name="back_drop_image">back drop image</string>
+    <string name="image_from_movie">image from movie</string>
+    <string name="images">Images:</string>
 </resources>

@@ -21,4 +21,7 @@
     <string name="add_to_favorite">Добавлено в избранное</string>
     <string name="remove_from_favorite">Удалено из избранного</string>
     <string name="genre">Жанры:</string>
+    <string name="back_drop_image">Изображение заднего фона</string>
+    <string name="image_from_movie">Изображения из фильма</string>
+    <string name="images">Изображения:</string>
 </resources>
