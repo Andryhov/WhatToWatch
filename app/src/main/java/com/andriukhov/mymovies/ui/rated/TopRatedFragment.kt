@@ -23,7 +23,7 @@ import java.util.*
 
 class TopRatedFragment : Fragment() {
 
-    private lateinit var ratedViewModel: RatedViewModel
+    private var ratedViewModel: RatedViewModel? = null
     private var _binding: FragmentTopratedBinding? = null
     private var adapter = MoviesRecyclerViewAdapter()
 
@@ -50,7 +50,7 @@ class TopRatedFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("page", page)
-        ratedViewModel.cacheListMovie.addAll(adapter.listMovies)
+        ratedViewModel?.cacheListMovie?.addAll(adapter.listMovies)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,14 +70,14 @@ class TopRatedFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         isLoading = false
-        ratedViewModel.cacheListMovie.clear()
+        ratedViewModel?.cacheListMovie?.clear()
     }
 
     private fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             page = savedInstanceState.getInt("page")
-            adapter.listMovies.addAll(ratedViewModel.cacheListMovie)
-            ratedViewModel.cacheListMovie.clear()
+            ratedViewModel?.let { adapter.listMovies.addAll(it.cacheListMovie) }
+            ratedViewModel?.cacheListMovie?.clear()
         }
     }
 
@@ -109,7 +109,7 @@ class TopRatedFragment : Fragment() {
     }
 
     private fun getMoviesFromDb() {
-        ratedViewModel.allMovies.observe(viewLifecycleOwner, {
+        ratedViewModel?.allMovies?.observe(viewLifecycleOwner, {
             if (page == 1) {
                 this.adapter.listMovies = it as MutableList<Movie>
             }
@@ -129,10 +129,10 @@ class TopRatedFragment : Fragment() {
     }
 
     private fun getMovies() {
-        ratedViewModel.getTopRatedMovies(lang, page).observe(viewLifecycleOwner, {
-            if (ratedViewModel.cacheListMovie.size == 0 && !adapter.listMovies.containsAll(it)) {
+        ratedViewModel?.getTopRatedMovies(lang, page)?.observe(viewLifecycleOwner, {
+            if (ratedViewModel?.cacheListMovie?.size == 0 && !adapter.listMovies.containsAll(it)) {
                 clearMoviesFromAll()
-                it.forEach { movie -> ratedViewModel.addMovie(movie) }
+                it.forEach { movie -> ratedViewModel!!.addMovie(movie) }
                 adapter.listMovies = it as MutableList<Movie>
                 page++
             }
@@ -144,7 +144,7 @@ class TopRatedFragment : Fragment() {
     }
 
     private fun getException() {
-        ratedViewModel.exception.observe(viewLifecycleOwner, {
+        ratedViewModel?.exception?.observe(viewLifecycleOwner, {
             getMoviesFromDb()
             Toast.makeText(
                 this.context,
@@ -157,7 +157,7 @@ class TopRatedFragment : Fragment() {
     private fun clearMoviesFromAll() {
         if (page == 1) {
             adapter.clear()
-            ratedViewModel.removeAllMovies()
+            ratedViewModel?.removeAllMovies()
         }
     }
 
