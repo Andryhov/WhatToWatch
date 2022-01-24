@@ -2,15 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/sp8"
+    android:paddingEnd="@dimen/sp8">
 
     <TextView
         android:id="@+id/textViewNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/name_label"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,25 +22,12 @@
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/viewFirstLine"
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_margin="@dimen/sp8"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewNameText" />
-
     <TextView
         android:id="@+id/textViewLabelOriginalTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/original_title_label"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewFirstLine" />
+        app:layout_constraintTop_toBottomOf="@id/textViewNameText" />
 
     <TextView
         android:id="@+id/textViewOriginalTitleText"
@@ -50,27 +36,14 @@
         android:layout_margin="@dimen/sp8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/viewFirstLine" />
-
-    <View
-        android:id="@+id/viewSecondLine"
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_margin="@dimen/sp8"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewOriginalTitleText" />
+        app:layout_constraintTop_toBottomOf="@id/textViewNameText" />
 
     <TextView
         android:id="@+id/textViewRatingTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/rate"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewSecondLine" />
+        app:layout_constraintTop_toBottomOf="@id/textViewOriginalTitleText" />
 
     <TextView
         android:id="@+id/textViewRatingText"
@@ -79,27 +52,14 @@
         android:layout_margin="@dimen/sp8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/viewSecondLine" />
-
-    <View
-        android:id="@+id/viewThirdLine"
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_margin="@dimen/sp8"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewRatingText" />
+        app:layout_constraintTop_toBottomOf="@id/textViewOriginalTitleText" />
 
     <TextView
         android:id="@+id/textViewReleaseDateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/release_date"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewThirdLine" />
+        app:layout_constraintTop_toBottomOf="@id/textViewRatingTitle" />
 
     <TextView
         android:id="@+id/textViewReleaseDataText"
@@ -108,27 +68,14 @@
         android:layout_margin="@dimen/sp8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/viewThirdLine" />
-
-    <View
-        android:id="@+id/viewFourLine"
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_margin="@dimen/sp8"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewReleaseDataText" />
+        app:layout_constraintTop_toBottomOf="@id/textViewRatingText" />
 
     <TextView
         android:id="@+id/textViewGenreLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/genre"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/viewFourLine" />
+        app:layout_constraintTop_toBottomOf="@id/textViewReleaseDateLabel" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewGenres"
@@ -139,25 +86,12 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewGenreLabel" />
 
-    <View
-        android:id="@+id/viewSixLine"
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_margin="@dimen/sp8"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewGenres" />
-
     <TextView
         android:id="@+id/textViewDescriptionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/description_label"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewSixLine" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewGenres" />
 
     <TextView
         android:id="@+id/textViewDescriptionText"
@@ -169,11 +103,8 @@
 
     <TextView
         android:id="@+id/textViewImagesLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/images"
-        android:textColor="@color/detail_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionText"/>
 
@@ -185,16 +116,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewImagesLabel"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <View
-        android:id="@+id/viewFiveLine"
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_margin="@dimen/sp8"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewImages" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -204,15 +125,12 @@
 
     <TextView
         android:id="@+id/textViewTitleTrailer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/trailers"
-        android:textColor="@color/detail_trailers_review"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/recyclerViewTrailers"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewFiveLine" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewImages" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTrailers"
@@ -225,11 +143,8 @@
 
     <TextView
         android:id="@+id/textViewTitleReviews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/sp8"
+        style="@style/TextViewLabel"
         android:text="@string/reviews"
-        android:textColor="@color/detail_trailers_review"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/recyclerViewReviews"
         app:layout_constraintStart_toStartOf="parent"
