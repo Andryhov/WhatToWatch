@@ -24,4 +24,6 @@
     <string name="images">Зображення:</string>
     <string name="back_drop_image">Зображення заднього фону</string>
     <string name="image_from_movie">Зображення з фільму</string>
+    <string name="actors">Актори:</string>
+    <string name="actor_photo">Фото актера</string>
 </resources>

@@ -56,4 +56,6 @@ class MoviesRepository(
     suspend fun loadGenres(language: String) = apiService.getGenres(language)
 
     suspend fun loadImages(id: Int, language: String) = apiService.getImages(id ,language)
+
+    suspend fun loadActors(id: Int, language: String) = apiService.getActorsByMovieId(id, language)
 }

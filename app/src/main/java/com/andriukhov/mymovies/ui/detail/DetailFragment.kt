@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.adapter.GenreRecyclerViewAdapter
-import com.andriukhov.mymovies.adapter.ImagesRecycleViewAdapter
-import com.andriukhov.mymovies.adapter.ReviewsRecyclerViewAdapter
-import com.andriukhov.mymovies.adapter.TrailersRecycleViewAdapter
+import com.andriukhov.mymovies.adapter.*
 import com.andriukhov.mymovies.data.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.listener.TrailerClickListener
@@ -35,6 +32,7 @@ class DetailFragment : Fragment() {
     private lateinit var trailerAdapter: TrailersRecycleViewAdapter
     private lateinit var reviewAdapter: ReviewsRecyclerViewAdapter
     private lateinit var imageAdapter: ImagesRecycleViewAdapter
+    private lateinit var actorsAdapter: ActorsRecyclerViewAdapter
 
     private var favouriteMovie: Favorite? = null
     private lateinit var movie: Movie
@@ -47,6 +45,7 @@ class DetailFragment : Fragment() {
         trailerAdapter = TrailersRecycleViewAdapter()
         reviewAdapter = ReviewsRecyclerViewAdapter()
         imageAdapter = ImagesRecycleViewAdapter()
+        actorsAdapter = ActorsRecyclerViewAdapter()
     }
 
     override fun onCreateView(
@@ -80,6 +79,10 @@ class DetailFragment : Fragment() {
         imageRecyclerView.adapter = imageAdapter
         imageRecyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
 
+        val actorsRecyclerView = binding.movieInfo.recycleViewActors
+        actorsRecyclerView.adapter = actorsAdapter
+        actorsRecyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+
         idMovie = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
 
@@ -89,6 +92,7 @@ class DetailFragment : Fragment() {
         clickFavoriteStar()
         clickOnTrailer()
         observeImages()
+        observeActors()
     }
 
     private fun initViewModel() {
@@ -124,6 +128,14 @@ class DetailFragment : Fragment() {
         viewModel.getImages(idMovie).observe(viewLifecycleOwner, {
             if(it.isNotEmpty()) {
                 imageAdapter.images = it as MutableList<Image>
+            }
+        })
+    }
+
+    private fun observeActors() {
+        viewModel.getActors(idMovie).observe(viewLifecycleOwner, {
+            if(it.isNotEmpty()) {
+                actorsAdapter.actors = it as MutableList<Actor>
             }
         })
     }

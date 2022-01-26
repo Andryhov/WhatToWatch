@@ -30,4 +30,7 @@
     <style name="CardColorGenres" parent="TextViewPrimary">
         <item name="android:backgroundTint">@color/card_genres_navy900</item>
     </style>
+    <style name="ColorBackgroundForActorText">
+        <item name="backgroundTint">@color/card_genres_navy900</item>
+    </style>
 </resources>

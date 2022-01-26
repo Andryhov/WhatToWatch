@@ -18,6 +18,8 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     private val dataImages = MutableLiveData<List<Image>>()
 
+    private val dataActors = MutableLiveData<List<Actor>>()
+
     private val language = Locale.getDefault().language
 
     fun getTrailers(id: Int): LiveData<List<Trailer>> {
@@ -76,6 +78,17 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
     private fun loadImages(id: Int) {
         viewModelScope.launch {
            dataImages.value = repository.loadImages(id, language).images
+        }
+    }
+
+    fun getActors(id: Int): LiveData<List<Actor>> {
+        loadActors(id)
+        return dataActors
+    }
+
+    private fun loadActors(id: Int) {
+        viewModelScope.launch {
+            dataActors.value = repository.loadActors(id, language).actors
         }
     }
 

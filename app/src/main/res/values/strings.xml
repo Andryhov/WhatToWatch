@@ -25,4 +25,6 @@
     <string name="back_drop_image">back drop image</string>
     <string name="image_from_movie">image from movie</string>
     <string name="images">Images:</string>
+    <string name="actors">Actors</string>
+    <string name="actor_photo">Actor photo</string>
 </resources>

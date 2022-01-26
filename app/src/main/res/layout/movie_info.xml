@@ -102,11 +102,26 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionLabel" />
 
     <TextView
+        android:id="@+id/textViewActorsTitle"
+        style="@style/TextViewLabel"
+        android:text="@string/actors"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionText"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewActors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActorsTitle"/>
+
+    <TextView
         android:id="@+id/textViewImagesLabel"
         style="@style/TextViewLabel"
         android:text="@string/images"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionText"/>
+        app:layout_constraintTop_toBottomOf="@+id/recycleViewActors"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewImages"

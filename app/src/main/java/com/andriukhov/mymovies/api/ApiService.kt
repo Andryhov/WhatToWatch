@@ -3,6 +3,7 @@ package com.andriukhov.mymovies.api
 import com.andriukhov.mymovies.data.Movie
 import com.andriukhov.mymovies.data.Review
 import com.andriukhov.mymovies.data.Trailer
+import com.andriukhov.mymovies.pojo.ActorsResponse
 import com.andriukhov.mymovies.pojo.DataResponse
 import com.andriukhov.mymovies.pojo.GenreResponse
 import com.andriukhov.mymovies.pojo.ImagesResponse
@@ -54,4 +55,10 @@ interface ApiService {
         @Path("id") id: Int,
         @Query("language") language: String
     ): ImagesResponse
+
+    @GET("movie/{id}/credits?api_key=$API_KEY")
+    suspend fun getActorsByMovieId(
+        @Path("id") id: Int,
+        @Query("language") language: String
+    ): ActorsResponse
 }
