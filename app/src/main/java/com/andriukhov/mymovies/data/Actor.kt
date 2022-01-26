@@ -17,4 +17,7 @@ data class Actor(
 ) {
     fun getFullProfilePhotoPath(): String =
         ApiFactory.BASE_IMG_URL + ApiFactory.SMALL_POSTER_SIZE + profilePhoto
+
+    fun getUrlForWebSearchActor(): String =
+        ApiFactory.BASE_GOOGLE_SEARCH_URL + name
 }

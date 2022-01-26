@@ -17,6 +17,7 @@ import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.*
 import com.andriukhov.mymovies.data.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
+import com.andriukhov.mymovies.listener.ActorClickListener
 import com.andriukhov.mymovies.listener.TrailerClickListener
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -91,6 +92,7 @@ class DetailFragment : Fragment() {
         getReviews()
         clickFavoriteStar()
         clickOnTrailer()
+        clickOnActor()
         observeImages()
         observeActors()
     }
@@ -109,6 +111,17 @@ class DetailFragment : Fragment() {
 
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getFullTrailerPath()))
                 startActivity(intent)
+            }
+        }
+    }
+
+    private fun clickOnActor() {
+        actorsAdapter.actorClickListener = object : ActorClickListener {
+            override fun onActorClickListener(position: Int) {
+                val actor = actorsAdapter.actors[position]
+
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(actor.getUrlForWebSearchActor()))
+                    startActivity(intent)
             }
         }
     }

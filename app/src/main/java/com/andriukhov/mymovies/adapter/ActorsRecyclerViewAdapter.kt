@@ -8,10 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.data.Actor
+import com.andriukhov.mymovies.listener.ActorClickListener
 import com.squareup.picasso.Picasso
 
 class ActorsRecyclerViewAdapter :
     RecyclerView.Adapter<ActorsRecyclerViewAdapter.ActorsViewHolder>() {
+
+    lateinit var actorClickListener: ActorClickListener
 
     var actors = mutableListOf<Actor>()
         set(value) {
@@ -29,6 +32,10 @@ class ActorsRecyclerViewAdapter :
             imageViewActorPhoto = view.findViewById(R.id.imageViewActorPhoto)
             textViewActorName = view.findViewById(R.id.textViewActorName)
             textViewCharacterName = view.findViewById(R.id.textViewCharacterName)
+
+            view.setOnClickListener {
+                actorClickListener.onActorClickListener(adapterPosition)
+            }
         }
     }
 

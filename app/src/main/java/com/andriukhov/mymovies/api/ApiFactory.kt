@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiFactory {
     private const val BASE_URL = "https://api.themoviedb.org/3/"
+    const val BASE_GOOGLE_SEARCH_URL = "https://www.google.com/search?q="
     const val BASE_URL_YOUTUBE = "https://www.youtube.com/watch?v="
     const val BASE_IMG_URL = "https://image.tmdb.org/t/p"
     const val SMALL_POSTER_SIZE = "/w185"

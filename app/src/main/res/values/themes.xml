@@ -40,6 +40,6 @@
         <item name="android:backgroundTint">@color/card_genres_blue_grey</item>
     </style>
     <style name="ColorBackgroundForActorText">
-        <item name="backgroundTint">@color/card_genres_blue_grey</item>
+        <item name="android:background">@color/card_genres_blue_grey</item>
     </style>
 </resources>
