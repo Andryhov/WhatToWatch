@@ -49,7 +49,7 @@ class ActorsRecyclerViewAdapter :
         val actor = actors[position]
         Picasso.get().load(actor.getFullProfilePhotoPath()).placeholder(R.drawable.placeholder).into(holder.imageViewActorPhoto)
         holder.textViewActorName?.text = actor.name
-        holder.textViewCharacterName?.text = actor.character
+        holder.textViewCharacterName?.text = String.format("(%s)", actor.character)
     }
 
     override fun getItemCount(): Int = actors.size
