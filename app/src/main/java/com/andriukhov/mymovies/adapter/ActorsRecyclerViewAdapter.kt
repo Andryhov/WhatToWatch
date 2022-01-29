@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.data.Actor
+import com.andriukhov.mymovies.pojo.Actor
 import com.andriukhov.mymovies.listener.ActorClickListener
 import com.squareup.picasso.Picasso
 

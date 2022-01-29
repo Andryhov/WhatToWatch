@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.data.Image
+import com.andriukhov.mymovies.pojo.Image
 import com.squareup.picasso.Picasso
 
 class ImagesRecycleViewAdapter: RecyclerView.Adapter<ImagesRecycleViewAdapter.ImagesViewHolder>() {

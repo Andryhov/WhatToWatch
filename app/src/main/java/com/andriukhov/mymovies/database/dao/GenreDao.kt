@@ -1,10 +1,10 @@
-package com.andriukhov.mymovies.dao
+package com.andriukhov.mymovies.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.andriukhov.mymovies.data.Genre
+import com.andriukhov.mymovies.pojo.Genre
 import kotlinx.coroutines.flow.Flow
 
 @Dao

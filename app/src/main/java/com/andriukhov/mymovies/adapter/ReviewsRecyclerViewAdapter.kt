@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.data.Review
+import com.andriukhov.mymovies.pojo.Review
 
 class ReviewsRecyclerViewAdapter: RecyclerView.Adapter<ReviewsRecyclerViewAdapter.ReviewsViewHolder>() {
 

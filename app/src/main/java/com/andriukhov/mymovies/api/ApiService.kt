@@ -1,12 +1,12 @@
 package com.andriukhov.mymovies.api
 
-import com.andriukhov.mymovies.data.Movie
-import com.andriukhov.mymovies.data.Review
-import com.andriukhov.mymovies.data.Trailer
-import com.andriukhov.mymovies.pojo.ActorsResponse
-import com.andriukhov.mymovies.pojo.DataResponse
-import com.andriukhov.mymovies.pojo.GenreResponse
-import com.andriukhov.mymovies.pojo.ImagesResponse
+import com.andriukhov.mymovies.pojo.Movie
+import com.andriukhov.mymovies.pojo.Review
+import com.andriukhov.mymovies.pojo.Trailer
+import com.andriukhov.mymovies.response.ActorsResponse
+import com.andriukhov.mymovies.response.DataResponse
+import com.andriukhov.mymovies.response.GenreResponse
+import com.andriukhov.mymovies.response.ImagesResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

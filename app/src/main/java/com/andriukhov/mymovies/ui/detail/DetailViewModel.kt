@@ -2,7 +2,7 @@ package com.andriukhov.mymovies.ui.detail
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.andriukhov.mymovies.data.*
+import com.andriukhov.mymovies.pojo.*
 import com.andriukhov.mymovies.repository.MoviesRepository
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException

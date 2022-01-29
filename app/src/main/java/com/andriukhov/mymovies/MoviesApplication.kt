@@ -2,7 +2,7 @@ package com.andriukhov.mymovies
 
 import android.app.Application
 import com.andriukhov.mymovies.api.ApiFactory
-import com.andriukhov.mymovies.data.MovieDatabase
+import com.andriukhov.mymovies.database.MovieDatabase
 import com.andriukhov.mymovies.repository.MoviesRepository
 
 class MoviesApplication : Application() {
