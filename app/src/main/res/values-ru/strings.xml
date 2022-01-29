@@ -26,4 +26,5 @@
     <string name="images">Изображения:</string>
     <string name="actors">Актеры:</string>
     <string name="actor_photo">Фото актора</string>
+    <string name="empty_list">Список пуст</string>
 </resources>

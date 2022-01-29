@@ -139,7 +139,12 @@ class DetailFragment : Fragment() {
     private fun observeImages() {
         viewModel.getImages(idMovie).observe(viewLifecycleOwner, {
             if(it.isNotEmpty()) {
+                binding.movieInfo.textViewImgError.visibility = View.GONE
+                binding.movieInfo.recyclerViewImages.visibility = View.VISIBLE
                 imageAdapter.images = it as MutableList<Image>
+            } else {
+                binding.movieInfo.textViewImgError.visibility = View.VISIBLE
+                binding.movieInfo.recyclerViewImages.visibility = View.INVISIBLE
             }
         })
     }
@@ -147,7 +152,12 @@ class DetailFragment : Fragment() {
     private fun observeActors() {
         viewModel.getActors(idMovie).observe(viewLifecycleOwner, {
             if(it.isNotEmpty()) {
+                binding.movieInfo.textViewActorsError.visibility = View.GONE
+                binding.movieInfo.recycleViewActors.visibility = View.VISIBLE
                 actorsAdapter.actors = it as MutableList<Actor>
+            } else {
+                binding.movieInfo.textViewActorsError.visibility = View.VISIBLE
+                binding.movieInfo.recycleViewActors.visibility = View.INVISIBLE
             }
         })
     }
@@ -238,7 +248,14 @@ class DetailFragment : Fragment() {
 
     private fun setGenres(movie: Movie) {
         viewModel.getGenresName(movie.genreIds).observe(viewLifecycleOwner, {
-            genreAdapter.genreList = it as MutableList<String>
+            if(it.isEmpty()) {
+                binding.movieInfo.textViewGenreError.visibility = View.VISIBLE
+                binding.movieInfo.recyclerViewGenres.visibility = View.INVISIBLE
+            } else {
+                binding.movieInfo.textViewGenreError.visibility = View.GONE
+                binding.movieInfo.recyclerViewGenres.visibility = View.VISIBLE
+                genreAdapter.genreList = it as MutableList<String>
+            }
         })
     }
 
