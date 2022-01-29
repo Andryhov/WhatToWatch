@@ -27,4 +27,5 @@
     <string name="images">Images:</string>
     <string name="actors">Actors</string>
     <string name="actor_photo">Actor photo</string>
+    <string name="empty_list">List is empty</string>
 </resources>

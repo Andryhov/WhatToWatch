@@ -87,11 +87,17 @@
         app:layout_constraintTop_toBottomOf="@id/textViewGenreLabel" />
 
     <TextView
+        android:id="@+id/textViewGenreError"
+        style="@style/EmptyListOrNoInternetConnection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewGenres"/>
+
+    <TextView
         android:id="@+id/textViewDescriptionLabel"
         style="@style/TextViewLabel"
         android:text="@string/description_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewGenres" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewGenreError" />
 
     <TextView
         android:id="@+id/textViewDescriptionText"
@@ -117,11 +123,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewActorsTitle"/>
 
     <TextView
+        android:id="@+id/textViewActorsError"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        style="@style/EmptyListOrNoInternetConnection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycleViewActors"/>
+
+    <TextView
         android:id="@+id/textViewImagesLabel"
         style="@style/TextViewLabel"
         android:text="@string/images"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycleViewActors"/>
+        app:layout_constraintTop_toBottomOf="@+id/textViewActorsError"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewImages"
@@ -130,6 +144,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewImagesLabel"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewImgError"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        style="@style/EmptyListOrNoInternetConnection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewImages"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -145,7 +167,7 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/recyclerViewTrailers"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewImages" />
+        app:layout_constraintTop_toBottomOf="@id/textViewImgError" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTrailers"

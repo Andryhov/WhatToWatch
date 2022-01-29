@@ -26,4 +26,5 @@
     <string name="image_from_movie">Зображення з фільму</string>
     <string name="actors">Актори:</string>
     <string name="actor_photo">Фото актера</string>
+    <string name="empty_list">Порожній список</string>
 </resources>

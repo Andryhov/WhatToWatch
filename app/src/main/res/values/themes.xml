@@ -36,6 +36,15 @@
         <item name="android:textStyle">bold|normal</item>
     </style>
 
+    <style name="EmptyListOrNoInternetConnection">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/white_grey</item>
+        <item name="android:layout_margin">@dimen/sp8</item>
+        <item name="android:text">@string/empty_list</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <style name="CardColorGenres" parent="TextViewPrimary">
         <item name="android:backgroundTint">@color/card_genres_blue_grey</item>
     </style>

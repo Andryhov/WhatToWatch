@@ -3,11 +3,17 @@ package com.andriukhov.mymovies.database;
 import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.RoomOpenHelper;
+import androidx.room.RoomOpenHelper.Delegate;
+import androidx.room.RoomOpenHelper.ValidationResult;
 import androidx.room.util.DBUtil;
 import androidx.room.util.TableInfo;
+import androidx.room.util.TableInfo.Column;
+import androidx.room.util.TableInfo.ForeignKey;
+import androidx.room.util.TableInfo.Index;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
-
+import androidx.sqlite.db.SupportSQLiteOpenHelper.Callback;
+import androidx.sqlite.db.SupportSQLiteOpenHelper.Configuration;
 import com.andriukhov.mymovies.database.dao.GenreDao;
 import com.andriukhov.mymovies.database.dao.GenreDao_Impl;
 import com.andriukhov.mymovies.database.dao.MovieDao;
@@ -100,7 +106,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoMovies = new TableInfo("movies", _columnsMovies, _foreignKeysMovies, _indicesMovies);
         final TableInfo _existingMovies = TableInfo.read(_db, "movies");
         if (! _infoMovies.equals(_existingMovies)) {
-          return new RoomOpenHelper.ValidationResult(false, "movies(com.andriukhov.mymovies.data.Movie).\n"
+          return new RoomOpenHelper.ValidationResult(false, "movies(com.andriukhov.mymovies.pojo.Movie).\n"
                   + " Expected:\n" + _infoMovies + "\n"
                   + " Found:\n" + _existingMovies);
         }
@@ -121,7 +127,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoFavouriteMovies = new TableInfo("favourite_movies", _columnsFavouriteMovies, _foreignKeysFavouriteMovies, _indicesFavouriteMovies);
         final TableInfo _existingFavouriteMovies = TableInfo.read(_db, "favourite_movies");
         if (! _infoFavouriteMovies.equals(_existingFavouriteMovies)) {
-          return new RoomOpenHelper.ValidationResult(false, "favourite_movies(com.andriukhov.mymovies.data.Favorite).\n"
+          return new RoomOpenHelper.ValidationResult(false, "favourite_movies(com.andriukhov.mymovies.pojo.Favorite).\n"
                   + " Expected:\n" + _infoFavouriteMovies + "\n"
                   + " Found:\n" + _existingFavouriteMovies);
         }
@@ -133,7 +139,7 @@ public final class MovieDatabase_Impl extends MovieDatabase {
         final TableInfo _infoGenre = new TableInfo("genre", _columnsGenre, _foreignKeysGenre, _indicesGenre);
         final TableInfo _existingGenre = TableInfo.read(_db, "genre");
         if (! _infoGenre.equals(_existingGenre)) {
-          return new RoomOpenHelper.ValidationResult(false, "genre(com.andriukhov.mymovies.data.Genre).\n"
+          return new RoomOpenHelper.ValidationResult(false, "genre(com.andriukhov.mymovies.pojo.Genre).\n"
                   + " Expected:\n" + _infoGenre + "\n"
                   + " Found:\n" + _existingGenre);
         }

@@ -59,14 +59,19 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     private fun loadGenres(list: List<Int>) {
         viewModelScope.launch {
-            val genres: List<Genre> = repository.loadGenres(language).genres
-            val listGeneresName = mutableListOf<String>()
-            if (!genres.isNullOrEmpty()) {
-                list.forEach { id ->
-                    listGeneresName.add(genres.last { genre -> genre.id == id }.name)
+            try {
+                val genres: List<Genre> = repository.loadGenres(language).genres
+                val listGeneresName = mutableListOf<String>()
+                if (!genres.isNullOrEmpty()) {
+                    list.forEach { id ->
+                        listGeneresName.add(genres.last { genre -> genre.id == id }.name)
+                    }
                 }
+                dataGenresName.value = listGeneresName
+            } catch (e: UnknownHostException) {
+                dataGenresName.value = listOf()
+                Log.e("Genres load error", e.message.toString())
             }
-            dataGenresName.value = listGeneresName
         }
     }
 
@@ -77,7 +82,11 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     private fun loadImages(id: Int) {
         viewModelScope.launch {
-           dataImages.value = repository.loadImages(id, language).images
+            try {
+                dataImages.value = repository.loadImages(id, language).images
+            } catch (e: UnknownHostException) {
+                dataImages.value = listOf()
+            }
         }
     }
 
@@ -88,7 +97,11 @@ class DetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     private fun loadActors(id: Int) {
         viewModelScope.launch {
-            dataActors.value = repository.loadActors(id, language).actors
+            try {
+                dataActors.value = repository.loadActors(id, language).actors
+            } catch (e: UnknownHostException) {
+                dataActors.value = listOf()
+            }
         }
     }
 
