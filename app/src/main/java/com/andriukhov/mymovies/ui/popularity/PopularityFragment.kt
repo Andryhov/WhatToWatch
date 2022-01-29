@@ -1,7 +1,6 @@
 package com.andriukhov.mymovies.ui.popularity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
-import com.andriukhov.mymovies.data.Movie
+import com.andriukhov.mymovies.pojo.Movie
 import com.andriukhov.mymovies.databinding.FragmentPopularityBinding
 import com.andriukhov.mymovies.listener.OnReachEndListener
 import com.andriukhov.mymovies.listener.PosterClickListener

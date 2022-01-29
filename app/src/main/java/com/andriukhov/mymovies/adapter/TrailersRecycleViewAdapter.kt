@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.data.Trailer
+import com.andriukhov.mymovies.pojo.Trailer
 import com.andriukhov.mymovies.listener.TrailerClickListener
 
 class TrailersRecycleViewAdapter :

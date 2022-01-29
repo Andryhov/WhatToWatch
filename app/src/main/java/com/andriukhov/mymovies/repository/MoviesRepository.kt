@@ -2,9 +2,9 @@ package com.andriukhov.mymovies.repository
 
 import androidx.annotation.WorkerThread
 import com.andriukhov.mymovies.api.ApiService
-import com.andriukhov.mymovies.dao.MovieDao
-import com.andriukhov.mymovies.data.Favorite
-import com.andriukhov.mymovies.data.Movie
+import com.andriukhov.mymovies.database.dao.MovieDao
+import com.andriukhov.mymovies.pojo.Favorite
+import com.andriukhov.mymovies.pojo.Movie
 import kotlinx.coroutines.flow.Flow
 
 class MoviesRepository(

@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.data
+package com.andriukhov.mymovies.pojo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

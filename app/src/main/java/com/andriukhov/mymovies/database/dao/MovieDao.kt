@@ -1,11 +1,11 @@
-package com.andriukhov.mymovies.dao
+package com.andriukhov.mymovies.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.andriukhov.mymovies.data.Favorite
-import com.andriukhov.mymovies.data.Movie
+import com.andriukhov.mymovies.pojo.Favorite
+import com.andriukhov.mymovies.pojo.Movie
 import kotlinx.coroutines.flow.Flow
 
 @Dao

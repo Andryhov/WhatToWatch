@@ -1,6 +1,6 @@
-package com.andriukhov.mymovies.pojo
+package com.andriukhov.mymovies.response
 
-import com.andriukhov.mymovies.data.Genre
+import com.andriukhov.mymovies.pojo.Genre
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
