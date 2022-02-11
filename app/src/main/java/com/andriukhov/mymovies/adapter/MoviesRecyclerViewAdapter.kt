@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.viewholder.MoviesViewHolder
 import com.andriukhov.mymovies.pojo.Movie
-import com.andriukhov.mymovies.listener.OnReachEndListener
 import com.squareup.picasso.Picasso
 
 class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MoviesViewHolder>() {
     var onClickPoster: ((Movie) -> Unit)? = null
-    lateinit var onReachEndListener: OnReachEndListener
+    var onReachEndListener: (() -> Unit)? = null
 
     var listMovies = mutableListOf<Movie>()
         set(value) {
@@ -37,7 +36,7 @@ class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MoviesViewHolder>() {
         position: Int
     ) {
         if (listMovies.size >= 20 && position >= listMovies.size - 1) {
-            onReachEndListener.onReachEnd()
+            onReachEndListener?.invoke()
         }
         val movie = listMovies[position]
         Picasso.get().load(movie.getFullSmallPosterPath())

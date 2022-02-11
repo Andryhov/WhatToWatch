@@ -15,7 +15,6 @@ import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
 import com.andriukhov.mymovies.pojo.Movie
 import com.andriukhov.mymovies.databinding.FragmentPopularityBinding
-import com.andriukhov.mymovies.listener.OnReachEndListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -96,9 +95,9 @@ class PopularityFragment : Fragment() {
 
     private fun clickOnPoster() {
         adapter.onClickPoster = {
-                val bundle = Bundle()
-                bundle.putInt("id", it.id)
-                findNavController().navigate(R.id.detail_fragment, bundle)
+            val bundle = Bundle()
+            bundle.putInt("id", it.id)
+            findNavController().navigate(R.id.detail_fragment, bundle)
         }
     }
 
@@ -117,13 +116,11 @@ class PopularityFragment : Fragment() {
     }
 
     private fun reachEndListener() {
-        adapter.onReachEndListener = object : OnReachEndListener {
-            override fun onReachEnd() {
-                if (!isLoading) {
-                    isLoading = true
-                    getMovies()
-                    binding.progressBarLoading.visibility = View.VISIBLE
-                }
+        adapter.onReachEndListener = {
+            if (!isLoading) {
+                isLoading = true
+                getMovies()
+                binding.progressBarLoading.visibility = View.VISIBLE
             }
         }
     }
