@@ -16,7 +16,6 @@ import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.listener.ActorClickListener
-import com.andriukhov.mymovies.listener.TrailerClickListener
 import com.andriukhov.mymovies.pojo.*
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -77,11 +76,13 @@ class DetailFragment : Fragment() {
 
         val imageRecyclerView = binding.movieInfo.recyclerViewImages
         imageRecyclerView.adapter = imageAdapter
-        imageRecyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        imageRecyclerView.layoutManager =
+            LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
 
         val actorsRecyclerView = binding.movieInfo.recycleViewActors
         actorsRecyclerView.adapter = actorsAdapter
-        actorsRecyclerView.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
+        actorsRecyclerView.layoutManager =
+            LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
 
         idMovie = arguments?.getInt("id") ?: -1
         from = arguments?.getString("from") ?: ""
@@ -104,13 +105,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun clickOnTrailer() {
-        trailerAdapter.trailerClickListener = object : TrailerClickListener {
-            override fun onTrailerClickListener(position: Int) {
-                val trailer = trailerAdapter.trailersList[position]
-
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getFullTrailerPath()))
-                startActivity(intent)
-            }
+        trailerAdapter.onClickTrailer = {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.getFullTrailerPath()))
+            startActivity(intent)
         }
     }
 
@@ -120,7 +117,7 @@ class DetailFragment : Fragment() {
                 val actor = actorsAdapter.actors[position]
 
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(actor.getUrlForWebSearchActor()))
-                    startActivity(intent)
+                startActivity(intent)
             }
         }
     }
@@ -138,7 +135,7 @@ class DetailFragment : Fragment() {
 
     private fun observeImages() {
         viewModel.getImages(idMovie).observe(viewLifecycleOwner, {
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 binding.movieInfo.textViewImgError.visibility = View.GONE
                 binding.movieInfo.recyclerViewImages.visibility = View.VISIBLE
                 imageAdapter.images = it as MutableList<Image>
@@ -151,7 +148,7 @@ class DetailFragment : Fragment() {
 
     private fun observeActors() {
         viewModel.getActors(idMovie).observe(viewLifecycleOwner, {
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 binding.movieInfo.textViewActorsError.visibility = View.GONE
                 binding.movieInfo.recycleViewActors.visibility = View.VISIBLE
                 actorsAdapter.actors = it as MutableList<Actor>
@@ -248,7 +245,7 @@ class DetailFragment : Fragment() {
 
     private fun setGenres(movie: Movie) {
         viewModel.getGenresName(movie.genreIds).observe(viewLifecycleOwner, {
-            if(it.isEmpty()) {
+            if (it.isEmpty()) {
                 binding.movieInfo.textViewGenreError.visibility = View.VISIBLE
                 binding.movieInfo.recyclerViewGenres.visibility = View.INVISIBLE
             } else {
