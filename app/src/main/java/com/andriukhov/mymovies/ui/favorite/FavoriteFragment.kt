@@ -13,14 +13,13 @@ import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
 import com.andriukhov.mymovies.databinding.FragmentFavoriteBinding
 import com.andriukhov.mymovies.pojo.Movie
-import com.andriukhov.mymovies.listener.PosterClickListener
 
 class FavoriteFragment : Fragment() {
 
     private lateinit var favoriteViewModel: FavoriteViewModel
     private var _binding: FragmentFavoriteBinding? = null
     private lateinit var adapter: MoviesRecyclerViewAdapter
-    
+
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,14 +66,11 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun clickOnPoster() {
-        adapter.posterClickListener = object : PosterClickListener {
-            override fun onPosterClickListener(position: Int) {
-                val movie = adapter.listMovies[position]
-                val bundle = Bundle()
-                bundle.putInt("id", movie.id)
-                bundle.putString("from", "favorite")
-                findNavController().navigate(R.id.detail_fragment, bundle)
-            }
+        adapter.onClickPoster = {
+            val bundle = Bundle()
+            bundle.putInt("id", it.id)
+            bundle.putString("from", "favorite")
+            findNavController().navigate(R.id.detail_fragment, bundle)
         }
     }
 
