@@ -15,7 +15,6 @@ import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
-import com.andriukhov.mymovies.listener.ActorClickListener
 import com.andriukhov.mymovies.pojo.*
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -112,13 +111,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun clickOnActor() {
-        actorsAdapter.actorClickListener = object : ActorClickListener {
-            override fun onActorClickListener(position: Int) {
-                val actor = actorsAdapter.actors[position]
-
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(actor.getUrlForWebSearchActor()))
+        actorsAdapter.onActorClick = {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.getUrlForWebSearchActor()))
                 startActivity(intent)
-            }
         }
     }
 
