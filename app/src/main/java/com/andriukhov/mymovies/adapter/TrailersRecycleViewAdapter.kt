@@ -1,18 +1,15 @@
 package com.andriukhov.mymovies.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
+import com.andriukhov.mymovies.adapter.viewholder.TrailerViewHolder
 import com.andriukhov.mymovies.pojo.Trailer
-import com.andriukhov.mymovies.listener.TrailerClickListener
 
-class TrailersRecycleViewAdapter :
-    RecyclerView.Adapter<TrailersRecycleViewAdapter.TrailerViewHolder>() {
+class TrailersRecycleViewAdapter : RecyclerView.Adapter<TrailerViewHolder>() {
 
-    lateinit var trailerClickListener: TrailerClickListener
+    var onClickTrailer: ((Trailer) -> Unit)? = null
 
     var trailersList = mutableListOf<Trailer>()
         set(value) {
@@ -20,17 +17,6 @@ class TrailersRecycleViewAdapter :
             field.addAll(value)
             notifyDataSetChanged()
         }
-
-    inner class TrailerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var textViewTrailer: TextView? = null
-
-        init {
-            textViewTrailer = itemView.findViewById(R.id.textViewTrailer)
-            itemView.setOnClickListener {
-                trailerClickListener.onTrailerClickListener(adapterPosition)
-            }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrailerViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -41,6 +27,9 @@ class TrailersRecycleViewAdapter :
     override fun onBindViewHolder(holder: TrailerViewHolder, position: Int) {
         val trailer = trailersList[position]
         holder.textViewTrailer?.text = trailer.name
+        holder.itemView.setOnClickListener {
+            onClickTrailer?.invoke(trailer)
+        }
     }
 
     override fun getItemCount(): Int = trailersList.size
