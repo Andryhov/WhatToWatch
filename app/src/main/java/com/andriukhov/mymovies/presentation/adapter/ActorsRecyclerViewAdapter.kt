@@ -1,10 +1,10 @@
-package com.andriukhov.mymovies.adapter
+package com.andriukhov.mymovies.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.adapter.viewholder.ActorViewHolder
+import com.andriukhov.mymovies.presentation.adapter.viewholder.ActorViewHolder
 import com.andriukhov.mymovies.domain.pojo.Actor
 import com.squareup.picasso.Picasso
 

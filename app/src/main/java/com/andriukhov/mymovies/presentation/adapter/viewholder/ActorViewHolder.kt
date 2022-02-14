@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.adapter.viewholder
+package com.andriukhov.mymovies.presentation.adapter.viewholder
 
 import android.view.View
 import android.widget.ImageView

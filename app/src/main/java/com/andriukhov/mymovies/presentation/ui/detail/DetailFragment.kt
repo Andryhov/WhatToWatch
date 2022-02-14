@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.adapter.*
+import com.andriukhov.mymovies.presentation.adapter.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
 import com.andriukhov.mymovies.domain.pojo.*
 import com.google.android.flexbox.FlexDirection

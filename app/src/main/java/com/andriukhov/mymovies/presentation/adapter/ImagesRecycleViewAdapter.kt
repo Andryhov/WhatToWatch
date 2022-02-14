@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.adapter
+package com.andriukhov.mymovies.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
