@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
-import com.andriukhov.mymovies.adapter.MoviesRecyclerViewAdapter
+import com.andriukhov.mymovies.presentation.adapter.MoviesRecyclerViewAdapter
 import com.andriukhov.mymovies.databinding.FragmentFavoriteBinding
 import com.andriukhov.mymovies.domain.pojo.Movie
 
