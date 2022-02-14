@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.pojo
+package com.andriukhov.mymovies.domain.pojo
 
 import androidx.room.Entity
 import androidx.room.Ignore

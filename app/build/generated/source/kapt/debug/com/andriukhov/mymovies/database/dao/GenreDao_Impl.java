@@ -9,7 +9,7 @@ import androidx.room.SharedSQLiteStatement;
 import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
-import com.andriukhov.mymovies.pojo.Genre;
+import com.andriukhov.mymovies.domain.pojo.Genre;
 import java.lang.Class;
 import java.lang.Exception;
 import java.lang.Object;

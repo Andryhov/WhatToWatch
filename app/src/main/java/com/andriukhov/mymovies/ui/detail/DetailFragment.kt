@@ -15,7 +15,7 @@ import com.andriukhov.mymovies.MoviesApplication
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.*
 import com.andriukhov.mymovies.databinding.DetailFragmentBinding
-import com.andriukhov.mymovies.pojo.*
+import com.andriukhov.mymovies.domain.pojo.*
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent

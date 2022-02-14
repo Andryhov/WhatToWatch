@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.viewholder.MoviesViewHolder
-import com.andriukhov.mymovies.pojo.Movie
+import com.andriukhov.mymovies.domain.pojo.Movie
 import com.squareup.picasso.Picasso
 
 class MoviesRecyclerViewAdapter : RecyclerView.Adapter<MoviesViewHolder>() {

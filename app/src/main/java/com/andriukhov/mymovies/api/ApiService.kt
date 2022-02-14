@@ -1,8 +1,8 @@
 package com.andriukhov.mymovies.api
 
-import com.andriukhov.mymovies.pojo.Movie
-import com.andriukhov.mymovies.pojo.Review
-import com.andriukhov.mymovies.pojo.Trailer
+import com.andriukhov.mymovies.domain.pojo.Movie
+import com.andriukhov.mymovies.domain.pojo.Review
+import com.andriukhov.mymovies.domain.pojo.Trailer
 import com.andriukhov.mymovies.response.ActorsResponse
 import com.andriukhov.mymovies.response.DataResponse
 import com.andriukhov.mymovies.response.GenreResponse

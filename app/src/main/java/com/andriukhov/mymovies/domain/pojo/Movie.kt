@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.pojo
+package com.andriukhov.mymovies.domain.pojo
 
 import androidx.room.*
 import com.andriukhov.mymovies.api.ApiFactory

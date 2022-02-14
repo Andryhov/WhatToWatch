@@ -8,9 +8,9 @@ import androidx.room.TypeConverters
 import com.andriukhov.mymovies.converters.Converter
 import com.andriukhov.mymovies.database.dao.GenreDao
 import com.andriukhov.mymovies.database.dao.MovieDao
-import com.andriukhov.mymovies.pojo.Favorite
-import com.andriukhov.mymovies.pojo.Genre
-import com.andriukhov.mymovies.pojo.Movie
+import com.andriukhov.mymovies.domain.pojo.Favorite
+import com.andriukhov.mymovies.domain.pojo.Genre
+import com.andriukhov.mymovies.domain.pojo.Movie
 
 @Database(entities = [Movie::class, Favorite::class, Genre::class], version = 7, exportSchema = false)
 @TypeConverters(value = [Converter::class])

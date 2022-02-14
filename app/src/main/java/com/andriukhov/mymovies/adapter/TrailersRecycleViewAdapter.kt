@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andriukhov.mymovies.R
 import com.andriukhov.mymovies.adapter.viewholder.TrailerViewHolder
-import com.andriukhov.mymovies.pojo.Trailer
+import com.andriukhov.mymovies.domain.pojo.Trailer
 
 class TrailersRecycleViewAdapter : RecyclerView.Adapter<TrailerViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.pojo
+package com.andriukhov.mymovies.domain.pojo
 
 import com.andriukhov.mymovies.api.ApiFactory
 import com.google.gson.annotations.Expose
