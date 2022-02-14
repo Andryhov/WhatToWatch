@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.ui.rated
+package com.andriukhov.mymovies.presentation.ui.rated
 
 import android.os.Bundle
 import android.view.LayoutInflater

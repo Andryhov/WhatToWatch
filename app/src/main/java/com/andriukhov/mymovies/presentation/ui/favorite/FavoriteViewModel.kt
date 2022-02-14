@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.ui.favorite
+package com.andriukhov.mymovies.presentation.ui.favorite
 
 import androidx.lifecycle.*
 import com.andriukhov.mymovies.repository.MoviesRepository

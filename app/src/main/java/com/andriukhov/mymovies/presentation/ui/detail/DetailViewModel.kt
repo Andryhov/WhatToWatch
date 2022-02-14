@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.ui.detail
+package com.andriukhov.mymovies.presentation.ui.detail
 
 import android.util.Log
 import androidx.lifecycle.*

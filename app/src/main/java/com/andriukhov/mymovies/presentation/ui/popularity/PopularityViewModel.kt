@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.ui.popularity
+package com.andriukhov.mymovies.presentation.ui.popularity
 
 import android.util.Log
 import androidx.lifecycle.*

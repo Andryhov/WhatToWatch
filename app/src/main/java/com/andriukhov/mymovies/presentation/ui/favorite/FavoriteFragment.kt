@@ -1,4 +1,4 @@
-package com.andriukhov.mymovies.ui.favorite
+package com.andriukhov.mymovies.presentation.ui.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater

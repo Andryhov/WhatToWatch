@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_favorite"
-        android:name="com.andriukhov.mymovies.ui.favorite.FavoriteFragment"
+        android:name="com.andriukhov.mymovies.presentation.ui.favorite.FavoriteFragment"
         android:label="@string/favorite"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/nav_topRated"
-        android:name="com.andriukhov.mymovies.ui.rated.TopRatedFragment"
+        android:name="com.andriukhov.mymovies.presentation.ui.rated.TopRatedFragment"
         android:label="@string/rated"
         tools:layout="@layout/fragment_toprated" />
 
     <fragment
         android:id="@+id/nav_popularity"
-        android:name="com.andriukhov.mymovies.ui.popularity.PopularityFragment"
+        android:name="com.andriukhov.mymovies.presentation.ui.popularity.PopularityFragment"
         android:label="@string/popularity"
         tools:layout="@layout/fragment_popularity" />
 
     <fragment
         android:id="@+id/detail_fragment"
-        android:name="com.andriukhov.mymovies.ui.detail.DetailFragment"
+        android:name="com.andriukhov.mymovies.presentation.ui.detail.DetailFragment"
         android:label="@string/detail_info"
         tools:layout="@layout/detail_fragment"/>
 </navigation>
